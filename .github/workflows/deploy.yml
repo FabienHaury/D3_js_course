@@ -254,10 +254,116 @@ jobs:
                   padding: 50px 20px;
                 }
               }
+
+              /* =========================
+                 DARK MODE BUTTON
+              ========================= */
+              
+              .theme-toggle {
+                position: fixed;
+                top: 20px;
+                right: 20px;
+              
+                width: 45px;
+                height: 45px;
+              
+                border: 1px solid #e2e8f0;
+                border-radius: 50%;
+              
+                background: white;
+                color: #222;
+              
+                font-size: 20px;
+                cursor: pointer;
+              
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+              
+                z-index: 1000;
+              
+                transition: 0.2s ease;
+              }
+              
+              .theme-toggle:hover {
+                transform: scale(1.08);
+              }
+              
+              
+              /* =========================
+                 DARK MODE
+              ========================= */
+              
+              body.dark {
+                background: #0f172a;
+                color: #e2e8f0;
+              }
+              
+              body.dark .hero {
+                background: linear-gradient(
+                  135deg,
+                  #0f172a,
+                  #111827,
+                  #1e1b4b
+                );
+              }
+              
+              body.dark .hero p {
+                color: #94a3b8;
+              }
+              
+              body.dark .links a {
+                background: #1e293b;
+                border-color: #334155;
+                color: #e2e8f0;
+              }
+              
+              body.dark .links a:hover {
+                background: #2563eb;
+                border-color: #2563eb;
+                color: white;
+              }
+              
+              body.dark .scroll {
+                color: #94a3b8;
+              }
+              
+              body.dark .course-header p {
+                color: #94a3b8;
+              }
+              
+              body.dark .course-section li a {
+                background: #1e293b;
+                border-color: #334155;
+                color: #60a5fa;
+              }
+              
+              body.dark .course-section li a:hover {
+                background: #2563eb;
+                color: white;
+              }
+              
+              body.dark .theme-toggle {
+                background: #1e293b;
+                border-color: #334155;
+                color: white;
+              }
+              
+              body.dark footer {
+                border-color: #334155;
+                color: #94a3b8;
+              }
+              
+              body.dark footer a {
+                color: #60a5fa;
+              }
+              
             </style>
           </head>
 
           <body>
+
+          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+            🌙
+          </button>
 
             <!-- =========================
                  INTRODUCTION
@@ -371,6 +477,29 @@ jobs:
                 GitHub
               </a>
             </footer>
+
+            <script>
+              const themeToggle = document.getElementById("themeToggle");
+            
+              // Restore saved theme
+              if (localStorage.getItem("theme") === "dark") {
+                document.body.classList.add("dark");
+                themeToggle.textContent = "☀️";
+              }
+            
+              themeToggle.addEventListener("click", () => {
+                document.body.classList.toggle("dark");
+            
+                if (document.body.classList.contains("dark")) {
+                  themeToggle.textContent = "☀️";
+                  localStorage.setItem("theme", "dark");
+                } else {
+                  themeToggle.textContent = "🌙";
+                  localStorage.setItem("theme", "light");
+                }
+              });
+            </script>
+
 
           </body>
           </html>
