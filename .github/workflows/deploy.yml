@@ -25,6 +25,92 @@ jobs:
       - name: Setup Pages
         uses: actions/configure-pages@v5
 
+      - name: Generate homepage
+        run: |
+          cat > index.html <<'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+            <meta charset="UTF-8">
+            <meta name="viewport" content="width=device-width, initial-scale=1.0">
+            <title>D3.js Course</title>
+            <style>
+              body {
+                font-family: Arial, sans-serif;
+                max-width: 900px;
+                margin: 0 auto;
+                padding: 40px 20px;
+                background: #f7f7f7;
+                color: #222;
+              }
+
+              h1 {
+                margin-bottom: 40px;
+              }
+
+              h2 {
+                margin-top: 30px;
+              }
+
+              ul {
+                list-style: none;
+                padding: 0;
+              }
+
+              li {
+                margin: 10px 0;
+              }
+
+              a {
+                display: inline-block;
+                padding: 10px 15px;
+                background: white;
+                border-radius: 6px;
+                text-decoration: none;
+                color: #2563eb;
+                box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+              }
+
+              a:hover {
+                background: #2563eb;
+                color: white;
+              }
+            </style>
+          </head>
+
+          <body>
+            <h1>📚 D3.js Course</h1>
+          EOF
+
+          for section in */; do
+            section="${section%/}"
+
+            # Ignore hidden folders/files
+            [[ "$section" == .* ]] && continue
+
+            # Look for projects containing an index.html
+            projects=$(find "$section" -mindepth 2 -name "index.html" -type f | sort)
+
+            if [ -n "$projects" ]; then
+              echo "<h2>${section//_/ }</h2>" >> index.html
+              echo "<ul>" >> index.html
+
+              while IFS= read -r project; do
+                project_dir=$(dirname "$project")
+                project_name=$(basename "$project_dir")
+
+                echo "  <li><a href=\"./$project_dir/\">${project_name//-/ }</a></li>" >> index.html
+              done <<< "$projects"
+
+              echo "</ul>" >> index.html
+            fi
+          done
+
+          cat >> index.html <<'EOF'
+          </body>
+          </html>
+          EOF
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v4
         with:
@@ -33,3 +119,20 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+### 2. Ce que ça va faire
+
+Imaginons que tu ajoutes :
+
+```text
+WebDev_Foundation/
+├── first-website/
+│   └── index.html
+├── responsive-website/
+│   └── index.html
+└── landing-page/
+    └── index.html
+
+React_Foundation/
+└── todo-app/
+    └── index.html
