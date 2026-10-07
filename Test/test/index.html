@@ -1,15 +1,140 @@
 <!DOCTYPE html>
-<html>
-
+<html lang="en">
 <head>
-  <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+  <title>D3.js Bar Chart</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 40px;
+    }
+
+    .bar {
+      fill: steelblue;
+    }
+
+    .bar:hover {
+      fill: orange;
+    }
+
+    .axis text {
+      font-size: 14px;
+    }
+
+    .axis path,
+    .axis line {
+      stroke: #333;
+    }
+  </style>
 </head>
 
 <body>
-  <h1>Welcome!</h1>
-  <p>This is a paragraph.</p>
-  <p> This a change </p>
-  <button>Click me</button>
-</body>
 
+  <h1>My first D3.js bar chart</h1>
+
+  <div id="chart"></div>
+
+  <!-- D3.js from CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
+  <script>
+    // --------------------------------
+    // 1. Our data
+    // --------------------------------
+
+    const data = [
+      { name: "A", value: 1 },
+      { name: "B", value: 5 },
+      { name: "C", value: 8 },
+      { name: "D", value: 10 }
+    ];
+
+
+    // --------------------------------
+    // 2. Chart dimensions
+    // --------------------------------
+
+    const width = 600;
+    const height = 400;
+
+    const margin = {
+      top: 20,
+      right: 20,
+      bottom: 50,
+      left: 50
+    };
+
+
+    // --------------------------------
+    // 3. Create the SVG
+    // --------------------------------
+
+    const svg = d3
+      .select("#chart")
+      .append("svg")
+      .attr("width", width)
+      .attr("height", height);
+
+
+    // --------------------------------
+    // 4. X scale
+    // --------------------------------
+
+    const x = d3
+      .scaleBand()
+      .domain(data.map(d => d.name))
+      .range([margin.left, width - margin.right])
+      .padding(0.2);
+
+
+    // --------------------------------
+    // 5. Y scale
+    // --------------------------------
+
+    const y = d3
+      .scaleLinear()
+      .domain([0, d3.max(data, d => d.value)])
+      .nice()
+      .range([height - margin.bottom, margin.top]);
+
+
+    // --------------------------------
+    // 6. X axis
+    // --------------------------------
+
+    svg
+      .append("g")
+      .attr("transform", `translate(0, ${height - margin.bottom})`)
+      .call(d3.axisBottom(x));
+
+
+    // --------------------------------
+    // 7. Y axis
+    // --------------------------------
+
+    svg
+      .append("g")
+      .attr("transform", `translate(${margin.left}, 0)`)
+      .call(d3.axisLeft(y));
+
+
+    // --------------------------------
+    // 8. Create the bars
+    // --------------------------------
+
+    svg
+      .selectAll(".bar")
+      .data(data)
+      .join("rect")
+      .attr("class", "bar")
+      .attr("x", d => x(d.name))
+      .attr("y", d => y(d.value))
+      .attr("width", x.bandwidth())
+      .attr("height", d => y(0) - y(d.value));
+  </script>
+
+</body>
 </html>
