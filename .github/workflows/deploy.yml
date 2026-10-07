@@ -76,24 +76,19 @@ jobs:
               }
 
               .avatar {
-                width: 110px;
-                height: 110px;
-                margin: 0 auto 25px;
-
-                display: flex;
-                align-items: center;
-                justify-content: center;
-
-                border-radius: 50%;
-
-                background: #2563eb;
-                color: white;
-
-                font-size: 36px;
-                font-weight: bold;
-
-                box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
-              }
+                  width: 110px;
+                  height: 110px;
+                  margin: 0 auto 25px;
+                  border-radius: 50%;
+                  overflow: hidden;
+                  box-shadow: 0 8px 25px rgba(37, 99, 235, 0.25);
+                }
+                
+                .avatar img {
+                  width: 100%;
+                  height: 100%;
+                  object-fit: cover;
+                }
 
               .hero h1 {
                 margin: 0;
@@ -272,7 +267,7 @@ jobs:
               <div class="hero-content">
 
                 <div class="avatar">
-                  YN
+                <img src="./Images/photo_profile.jpg" alt="Fabien Haury">
                 </div>
 
                 <h1>
