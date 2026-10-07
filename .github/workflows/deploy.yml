@@ -77,7 +77,6 @@ jobs:
               }
             </style>
           </head>
-
           <body>
             <h1>📚 D3.js Course</h1>
           EOF
@@ -85,23 +84,24 @@ jobs:
           for section in */; do
             section="${section%/}"
 
-            # Ignore hidden folders/files
+            # Ignore hidden directories
             [[ "$section" == .* ]] && continue
 
-            # Look for projects containing an index.html
-            projects=$(find "$section" -mindepth 2 -name "index.html" -type f | sort)
+            # Find projects containing an index.html
+            while IFS= read -r project; do
+              project_dir=$(dirname "$project")
+              project_name=$(basename "$project_dir")
 
-            if [ -n "$projects" ]; then
-              echo "<h2>${section//_/ }</h2>" >> index.html
-              echo "<ul>" >> index.html
+              if ! grep -q "<h2>${section//_/ }</h2>" index.html; then
+                echo "<h2>${section//_/ }</h2>" >> index.html
+                echo "<ul>" >> index.html
+              fi
 
-              while IFS= read -r project; do
-                project_dir=$(dirname "$project")
-                project_name=$(basename "$project_dir")
+              echo "  <li><a href=\"./$project_dir/\">${project_name//-/ }</a></li>" >> index.html
 
-                echo "  <li><a href=\"./$project_dir/\">${project_name//-/ }</a></li>" >> index.html
-              done <<< "$projects"
+            done < <(find "$section" -mindepth 2 -name "index.html" -type f | sort)
 
+            if grep -q "<h2>${section//_/ }</h2>" index.html; then
               echo "</ul>" >> index.html
             fi
           done
@@ -119,20 +119,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-
-### 2. Ce que ça va faire
-
-Imaginons que tu ajoutes :
-
-```text
-WebDev_Foundation/
-├── first-website/
-│   └── index.html
-├── responsive-website/
-│   └── index.html
-└── landing-page/
-    └── index.html
-
-React_Foundation/
-└── todo-app/
-    └── index.html
