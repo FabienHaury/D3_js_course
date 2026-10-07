@@ -34,6 +34,7 @@ jobs:
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
             <title>D3.js Course</title>
+
             <style>
               body {
                 font-family: Arial, sans-serif;
@@ -77,6 +78,7 @@ jobs:
               }
             </style>
           </head>
+
           <body>
             <h1>📚 D3.js Course</h1>
           EOF
@@ -88,22 +90,22 @@ jobs:
             [[ "$section" == .* ]] && continue
 
             # Find projects containing an index.html
+            projects=$(find "$section" -mindepth 2 -name "index.html" -type f | sort)
+
+            # Skip sections without projects
+            [[ -z "$projects" ]] && continue
+
+            echo "<h2>${section//_/ }</h2>" >> index.html
+            echo "<ul>" >> index.html
+
             while IFS= read -r project; do
               project_dir=$(dirname "$project")
               project_name=$(basename "$project_dir")
 
-              if ! grep -q "<h2>${section//_/ }</h2>" index.html; then
-                echo "<h2>${section//_/ }</h2>" >> index.html
-                echo "<ul>" >> index.html
-              fi
-
               echo "  <li><a href=\"./$project_dir/\">${project_name//-/ }</a></li>" >> index.html
+            done <<< "$projects"
 
-            done < <(find "$section" -mindepth 2 -name "index.html" -type f | sort)
-
-            if grep -q "<h2>${section//_/ }</h2>" index.html; then
-              echo "</ul>" >> index.html
-            fi
+            echo "</ul>" >> index.html
           done
 
           cat >> index.html <<'EOF'
