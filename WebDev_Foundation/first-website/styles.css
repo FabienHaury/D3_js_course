@@ -1,0 +1,18 @@
+body {
+  font-family: system-ui, sans-serif;
+  background: #f5f5f5;
+  padding: 20px;
+}
+
+h1 {
+  color: #2563eb;
+}
+
+button {
+  background: #ff006a;
+  color: white;
+  padding: 5px 50px;
+  border: "dashed";
+  border-radius: 15px;
+  cursor: pointer;
+}
