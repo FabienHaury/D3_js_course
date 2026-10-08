@@ -34,6 +34,7 @@ jobs:
           <head>
             <meta charset="UTF-8">
             <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
             <title>Fabien Haury — D3.js & Data Visualization</title>
 
             <style>
@@ -63,7 +64,9 @@ jobs:
                 background: var(--bg);
                 color: var(--text);
                 font-family: Inter, Arial, sans-serif;
-                transition: background 0.3s ease, color 0.3s ease;
+                transition:
+                  background 0.3s ease,
+                  color 0.3s ease;
               }
 
               body.dark {
@@ -82,6 +85,10 @@ jobs:
               a {
                 color: inherit;
               }
+
+              /* =========================
+                 THEME TOGGLE
+              ========================= */
 
               .theme-toggle {
                 position: fixed;
@@ -105,10 +112,21 @@ jobs:
                 font-size: 18px;
 
                 box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+
+                transition: 0.2s ease;
               }
+
+              .theme-toggle:hover {
+                transform: scale(1.08);
+              }
+
+              /* =========================
+                 HERO
+              ========================= */
 
               .hero {
                 position: relative;
+
                 min-height: 100vh;
 
                 display: flex;
@@ -125,6 +143,7 @@ jobs:
 
                 display: grid;
                 grid-template-columns: 1fr 1.2fr;
+
                 gap: 60px;
                 align-items: center;
               }
@@ -142,6 +161,7 @@ jobs:
                 font-family: monospace;
                 font-size: 0.78rem;
                 font-weight: 700;
+
                 letter-spacing: 0.15em;
                 text-transform: uppercase;
               }
@@ -151,6 +171,7 @@ jobs:
 
                 font-size: clamp(3.5rem, 9vw, 7rem);
                 line-height: 0.9;
+
                 letter-spacing: -0.07em;
               }
 
@@ -176,6 +197,7 @@ jobs:
               .hero-links {
                 display: flex;
                 flex-wrap: wrap;
+
                 gap: 10px;
                 margin-top: 32px;
               }
@@ -199,16 +221,19 @@ jobs:
                 color: white;
                 background: var(--accent);
                 border-color: var(--accent);
+
                 transform: translateY(-2px);
               }
 
               .profile {
                 display: flex;
                 align-items: center;
+
                 gap: 12px;
                 margin-top: 42px;
 
                 color: var(--muted);
+
                 font-size: 0.78rem;
               }
 
@@ -225,8 +250,13 @@ jobs:
               .avatar img {
                 width: 100%;
                 height: 100%;
+
                 object-fit: cover;
               }
+
+              /* =========================
+                 D3 HERO VISUALIZATION
+              ========================= */
 
               .hero-viz {
                 position: relative;
@@ -241,11 +271,13 @@ jobs:
               #network {
                 width: 100%;
                 height: 520px;
+
                 overflow: visible;
               }
 
               .viz-label {
                 position: absolute;
+
                 left: 50%;
                 bottom: 22px;
 
@@ -255,8 +287,10 @@ jobs:
 
                 font-family: monospace;
                 font-size: 0.68rem;
+
                 letter-spacing: 0.12em;
                 text-transform: uppercase;
+
                 white-space: nowrap;
               }
 
@@ -266,8 +300,11 @@ jobs:
 
               .node circle {
                 fill: var(--surface);
+
                 stroke: var(--viz);
                 stroke-width: 2;
+
+                transition: 0.2s ease;
               }
 
               .node text {
@@ -290,11 +327,13 @@ jobs:
               .link {
                 stroke: var(--viz-soft);
                 stroke-width: 1;
+
                 opacity: 0.45;
               }
 
               .scroll-indicator {
                 position: absolute;
+
                 left: 50%;
                 bottom: 28px;
 
@@ -304,6 +343,7 @@ jobs:
 
                 font-family: monospace;
                 font-size: 0.7rem;
+
                 letter-spacing: 0.12em;
                 text-decoration: none;
                 text-transform: uppercase;
@@ -311,10 +351,17 @@ jobs:
 
               .scroll-indicator span {
                 display: block;
+
                 margin-top: 8px;
+
                 text-align: center;
+
                 font-size: 1rem;
               }
+
+              /* =========================
+                 MAIN
+              ========================= */
 
               main {
                 width: min(1100px, calc(100% - 40px));
@@ -327,8 +374,11 @@ jobs:
 
               .section-header {
                 display: grid;
+
                 grid-template-columns: 100px 1fr;
+
                 gap: 30px;
+
                 margin-bottom: 55px;
               }
 
@@ -337,31 +387,40 @@ jobs:
 
                 font-family: monospace;
                 font-size: 0.75rem;
+
                 letter-spacing: 0.1em;
               }
 
               .section-header h2 {
                 max-width: 700px;
+
                 margin: 0;
 
                 font-size: clamp(2rem, 5vw, 3.5rem);
+
                 line-height: 1;
+
                 letter-spacing: -0.045em;
               }
 
               .section-header p {
                 max-width: 600px;
+
                 margin: 18px 0 0;
 
                 color: var(--muted);
+
                 line-height: 1.7;
               }
+
+              /* =========================
+                 JOURNEY
+              ========================= */
 
               .journey {
                 position: relative;
 
                 display: grid;
-                gap: 0;
 
                 border-top: 1px solid var(--border);
               }
@@ -370,6 +429,7 @@ jobs:
                 content: "";
 
                 position: absolute;
+
                 top: 0;
                 bottom: 0;
                 left: 15px;
@@ -383,8 +443,11 @@ jobs:
                 position: relative;
 
                 display: grid;
+
                 grid-template-columns: 32px 1fr auto;
+
                 gap: 24px;
+
                 align-items: center;
 
                 padding: 23px 0;
@@ -413,6 +476,7 @@ jobs:
 
               .journey-item:hover .journey-dot {
                 background: var(--accent);
+
                 transform: scale(1.4);
               }
 
@@ -432,17 +496,25 @@ jobs:
 
               .journey-arrow {
                 color: var(--muted);
+
                 transition: 0.2s ease;
               }
 
               .journey-item:hover .journey-arrow {
                 color: var(--accent);
+
                 transform: translateX(5px);
               }
 
+              /* =========================
+                 PROJECTS
+              ========================= */
+
               .project-grid {
                 display: grid;
+
                 grid-template-columns: repeat(2, 1fr);
+
                 gap: 18px;
               }
 
@@ -460,6 +532,7 @@ jobs:
                 overflow: hidden;
 
                 border: 1px solid var(--border);
+
                 background: var(--surface);
 
                 text-decoration: none;
@@ -471,6 +544,7 @@ jobs:
 
               .project:hover {
                 transform: translateY(-5px);
+
                 border-color: var(--accent);
               }
 
@@ -485,6 +559,7 @@ jobs:
                 margin: 45px 0 6px;
 
                 font-size: 1.35rem;
+
                 letter-spacing: -0.025em;
               }
 
@@ -493,11 +568,13 @@ jobs:
 
                 font-family: monospace;
                 font-size: 0.68rem;
+
                 text-transform: uppercase;
               }
 
               .project-graphic {
                 position: absolute;
+
                 right: -15px;
                 top: -15px;
 
@@ -511,11 +588,15 @@ jobs:
 
               .project:hover .project-graphic {
                 opacity: 0.4;
-                transform: rotate(10deg) scale(1.05);
+
+                transform:
+                  rotate(10deg)
+                  scale(1.05);
               }
 
               .project-graphic circle {
                 fill: none;
+
                 stroke: var(--accent);
                 stroke-width: 1;
               }
@@ -524,6 +605,10 @@ jobs:
                 stroke: var(--accent);
                 stroke-width: 1;
               }
+
+              /* =========================
+                 FOOTER
+              ========================= */
 
               footer {
                 padding: 50px 20px;
@@ -540,18 +625,25 @@ jobs:
 
               footer a {
                 color: var(--accent);
+
                 text-decoration: none;
               }
+
+              /* =========================
+                 RESPONSIVE
+              ========================= */
 
               @media (max-width: 800px) {
 
                 .hero {
                   min-height: auto;
+
                   padding: 110px 0 80px;
                 }
 
                 .hero-inner {
                   grid-template-columns: 1fr;
+
                   gap: 30px;
                 }
 
@@ -565,6 +657,7 @@ jobs:
 
                 .section-header {
                   grid-template-columns: 50px 1fr;
+
                   gap: 15px;
                 }
 
@@ -581,7 +674,11 @@ jobs:
                 }
 
                 .hero h1 {
-                  font-size: clamp(3.2rem, 17vw, 5rem);
+                  font-size: clamp(
+                    3.2rem,
+                    17vw,
+                    5rem
+                  );
                 }
 
                 .hero-viz {
@@ -601,7 +698,11 @@ jobs:
                 }
 
                 .journey-item {
-                  grid-template-columns: 32px 1fr 20px;
+                  grid-template-columns:
+                    32px
+                    1fr
+                    20px;
+
                   gap: 15px;
                 }
 
@@ -621,6 +722,7 @@ jobs:
                 *::before,
                 *::after {
                   transition-duration: 0.01ms !important;
+
                   animation-duration: 0.01ms !important;
                 }
 
@@ -636,6 +738,11 @@ jobs:
               aria-label="Toggle dark mode">
               ◐
             </button>
+
+
+            <!-- =========================
+                 HERO
+            ========================== -->
 
             <header class="hero">
 
@@ -688,11 +795,16 @@ jobs:
                         alt="Fabien Haury">
                     </div>
 
-                    <span>D3.js course portfolio</span>
+                    <span>
+                      D3.js course portfolio
+                    </span>
 
                   </div>
 
                 </div>
+
+
+                <!-- D3 NETWORK -->
 
                 <div class="hero-viz">
 
@@ -710,17 +822,26 @@ jobs:
 
               </div>
 
+
               <a
                 class="scroll-indicator"
                 href="#journey">
+
                 explore
+
                 <span>↓</span>
+
               </a>
 
             </header>
 
 
             <main>
+
+
+              <!-- =========================
+                   JOURNEY
+              ========================== -->
 
               <section id="journey">
 
@@ -732,89 +853,180 @@ jobs:
 
                   <div>
 
-                    <h2>The journey</h2>
+                    <h2>
+                      The journey
+                    </h2>
 
                     <p>
-                      From the foundations of web development to interactive
-                      data visualization, these are the concepts I'm exploring.
+                      From the foundations of web development
+                      to interactive data visualization, these
+                      are the concepts I'm exploring.
                     </p>
 
                   </div>
 
                 </div>
 
+
                 <div class="journey">
 
-                  <a class="journey-item" href="#projects">
+                  <a
+                    class="journey-item"
+                    href="#projects">
+
                     <div class="journey-dot"></div>
+
                     <div>
-                      <div class="journey-title">Web Development</div>
+
+                      <div class="journey-title">
+                        Web Development
+                      </div>
+
                       <div class="journey-description">
                         HTML · CSS · JavaScript
                       </div>
+
                     </div>
-                    <div class="journey-arrow">→</div>
+
+                    <div class="journey-arrow">
+                      →
+                    </div>
+
                   </a>
 
-                  <a class="journey-item" href="#projects">
+
+                  <a
+                    class="journey-item"
+                    href="#projects">
+
                     <div class="journey-dot"></div>
+
                     <div>
-                      <div class="journey-title">React</div>
+
+                      <div class="journey-title">
+                        React
+                      </div>
+
                       <div class="journey-description">
                         Components · State · Data
                       </div>
+
                     </div>
-                    <div class="journey-arrow">→</div>
+
+                    <div class="journey-arrow">
+                      →
+                    </div>
+
                   </a>
 
-                  <a class="journey-item" href="#projects">
+
+                  <a
+                    class="journey-item"
+                    href="#projects">
+
                     <div class="journey-dot"></div>
+
                     <div>
-                      <div class="journey-title">SVG & D3.js</div>
+
+                      <div class="journey-title">
+                        SVG & D3.js
+                      </div>
+
                       <div class="journey-description">
                         Shapes · Scales · Coordinates
                       </div>
+
                     </div>
-                    <div class="journey-arrow">→</div>
+
+                    <div class="journey-arrow">
+                      →
+                    </div>
+
                   </a>
 
-                  <a class="journey-item" href="#projects">
+
+                  <a
+                    class="journey-item"
+                    href="#projects">
+
                     <div class="journey-dot"></div>
+
                     <div>
-                      <div class="journey-title">Visualization</div>
+
+                      <div class="journey-title">
+                        Visualization
+                      </div>
+
                       <div class="journey-description">
                         Axes · Charts · Data
                       </div>
+
                     </div>
-                    <div class="journey-arrow">→</div>
+
+                    <div class="journey-arrow">
+                      →
+                    </div>
+
                   </a>
 
-                  <a class="journey-item" href="#projects">
+
+                  <a
+                    class="journey-item"
+                    href="#projects">
+
                     <div class="journey-dot"></div>
+
                     <div>
-                      <div class="journey-title">Interaction</div>
+
+                      <div class="journey-title">
+                        Interaction
+                      </div>
+
                       <div class="journey-description">
                         Hover · Tooltips · Responsive
                       </div>
+
                     </div>
-                    <div class="journey-arrow">→</div>
+
+                    <div class="journey-arrow">
+                      →
+                    </div>
+
                   </a>
 
-                  <a class="journey-item" href="#projects">
+
+                  <a
+                    class="journey-item"
+                    href="#projects">
+
                     <div class="journey-dot"></div>
+
                     <div>
-                      <div class="journey-title">Animation</div>
+
+                      <div class="journey-title">
+                        Animation
+                      </div>
+
                       <div class="journey-description">
                         Transitions · Motion · Performance
                       </div>
+
                     </div>
-                    <div class="journey-arrow">→</div>
+
+                    <div class="journey-arrow">
+                      →
+                    </div>
+
                   </a>
 
                 </div>
 
               </section>
 
+
+              <!-- =========================
+                   PROJECTS
+              ========================== -->
 
               <section id="projects">
 
@@ -826,20 +1038,23 @@ jobs:
 
                   <div>
 
-                    <h2>My projects</h2>
+                    <h2>
+                      My projects
+                    </h2>
 
                     <p>
-                      Experiments, exercises and visualizations built
-                      throughout the course.
+                      Experiments, exercises and visualizations
+                      built throughout the course.
                     </p>
 
                   </div>
 
                 </div>
 
+
                 <div class="project-grid">
 
-          EOF
+          HTML
 
 
           # ==========================================
@@ -856,12 +1071,15 @@ jobs:
             [[ "$section" == .* ]] && continue
             [[ "$section" == "Images" ]] && continue
 
-            projects=$(find "$section" \
-              -mindepth 2 \
-              -name "index.html" \
-              -type f \
-              | sort)
+            projects=$(
+              find "$section" \
+                -mindepth 2 \
+                -name "index.html" \
+                -type f \
+                | sort
+            )
 
+            # Skip sections without projects
             [[ -z "$projects" ]] && continue
 
             while IFS= read -r project; do
@@ -894,9 +1112,23 @@ jobs:
                       style="transform: rotate(${angle}deg)"
                     >
 
-                      <circle cx="75" cy="75" r="52"></circle>
-                      <circle cx="75" cy="75" r="30"></circle>
-                      <circle cx="75" cy="75" r="8"></circle>
+                      <circle
+                        cx="75"
+                        cy="75"
+                        r="52">
+                      </circle>
+
+                      <circle
+                        cx="75"
+                        cy="75"
+                        r="30">
+                      </circle>
+
+                      <circle
+                        cx="75"
+                        cy="75"
+                        r="8">
+                      </circle>
 
                       <line
                         x1="20"
@@ -928,19 +1160,27 @@ jobs:
 
                   </a>
 
-          HTML
+HTML
 
+            # IMPORTANT:
+            # Close the inner while loop
             done <<< "$projects"
 
+          # IMPORTANT:
+          # Close the outer for loop
           done
 
 
-          cat >> index.html <<HTML
+          cat >> index.html <<'HTML'
 
                 </div>
 
               </section>
 
+
+              <!-- =========================
+                   ABOUT THE COURSE
+              ========================== -->
 
               <section>
 
@@ -952,13 +1192,19 @@ jobs:
 
                   <div>
 
-                    <h2>Learning by building.</h2>
+                    <h2>
+                      Learning by building.
+                    </h2>
 
                     <p>
-                      This portfolio documents my progress through the
-                      D3.js & React Data Visualization course by Yan Holtz.
-                      Each project is an opportunity to experiment with
-                      data, interaction and visual storytelling.
+                      This portfolio documents my progress through
+                      the D3.js & React Data Visualization course
+                      by Yan Holtz.
+                    </p>
+
+                    <p>
+                      Each project is an opportunity to experiment
+                      with data, interaction and visual storytelling.
                     </p>
 
                     <p style="margin-top: 25px;">
@@ -973,7 +1219,9 @@ jobs:
                           font-family: monospace;
                           font-size: 0.8rem;
                         ">
+
                         VIEW THE COURSE ↗
+
                       </a>
 
                     </p>
@@ -987,54 +1235,91 @@ jobs:
             </main>
 
 
+            <!-- =========================
+                 FOOTER
+            ========================== -->
+
             <footer>
 
               © 2026 Fabien Haury ·
+
               <a
                 href="https://github.com/FabienHaury"
                 target="_blank"
                 rel="noopener noreferrer">
+
                 GitHub
+
               </a>
 
             </footer>
 
 
+            <!-- =========================
+                 D3.JS
+            ========================== -->
+
             <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+
 
             <script>
 
+              /* =========================
+                 DARK MODE
+              ========================= */
+
               const themeToggle =
-                document.getElementById("themeToggle");
-
-              if (localStorage.getItem("theme") === "dark") {
-                document.body.classList.add("dark");
-                themeToggle.textContent = "☀";
-              }
-
-              themeToggle.addEventListener("click", () => {
-
-                document.body.classList.toggle("dark");
-
-                const dark =
-                  document.body.classList.contains("dark");
-
-                themeToggle.textContent =
-                  dark ? "☀" : "◐";
-
-                localStorage.setItem(
-                  "theme",
-                  dark ? "dark" : "light"
+                document.getElementById(
+                  "themeToggle"
                 );
 
-              });
+              if (
+                localStorage.getItem("theme") === "dark"
+              ) {
 
+                document.body.classList.add("dark");
+
+                themeToggle.textContent = "☀";
+
+              }
+
+
+              themeToggle.addEventListener(
+                "click",
+                () => {
+
+                  document.body.classList.toggle(
+                    "dark"
+                  );
+
+                  const dark =
+                    document.body.classList.contains(
+                      "dark"
+                    );
+
+                  themeToggle.textContent =
+                    dark ? "☀" : "◐";
+
+                  localStorage.setItem(
+                    "theme",
+                    dark ? "dark" : "light"
+                  );
+
+                }
+              );
+
+
+              /* =========================
+                 D3 NETWORK
+              ========================= */
 
               const svg =
                 d3.select("#network");
 
               const container =
-                document.querySelector(".hero-viz");
+                document.querySelector(
+                  ".hero-viz"
+                );
 
               const reducedMotion =
                 window.matchMedia(
@@ -1046,11 +1331,13 @@ jobs:
 
                 svg.selectAll("*").remove();
 
+
                 const width =
                   container.clientWidth;
 
                 const height =
                   container.clientHeight;
+
 
                 svg.attr(
                   "viewBox",
@@ -1060,16 +1347,55 @@ jobs:
 
                 const nodes = [
 
-                  { id: "D3.js", radius: 14 },
-                  { id: "SVG", radius: 8 },
-                  { id: "Scales", radius: 8 },
-                  { id: "Axes", radius: 7 },
-                  { id: "Data", radius: 9 },
-                  { id: "Interaction", radius: 8 },
-                  { id: "Animation", radius: 7 },
-                  { id: "React", radius: 9 },
-                  { id: "Charts", radius: 8 },
-                  { id: "Storytelling", radius: 10 }
+                  {
+                    id: "D3.js",
+                    radius: 14
+                  },
+
+                  {
+                    id: "SVG",
+                    radius: 8
+                  },
+
+                  {
+                    id: "Scales",
+                    radius: 8
+                  },
+
+                  {
+                    id: "Axes",
+                    radius: 7
+                  },
+
+                  {
+                    id: "Data",
+                    radius: 9
+                  },
+
+                  {
+                    id: "Interaction",
+                    radius: 8
+                  },
+
+                  {
+                    id: "Animation",
+                    radius: 7
+                  },
+
+                  {
+                    id: "React",
+                    radius: 9
+                  },
+
+                  {
+                    id: "Charts",
+                    radius: 8
+                  },
+
+                  {
+                    id: "Storytelling",
+                    radius: 10
+                  }
 
                 ];
 
@@ -1090,10 +1416,12 @@ jobs:
                   ["Charts", "Storytelling"],
                   ["React", "Interaction"]
 
-                ].map(([source, target]) => ({
-                  source,
-                  target
-                }));
+                ].map(
+                  ([source, target]) => ({
+                    source,
+                    target
+                  })
+                );
 
 
                 const simulation =
@@ -1124,7 +1452,9 @@ jobs:
                     .force(
                       "collision",
                       d3.forceCollide()
-                        .radius(d => d.radius + 15)
+                        .radius(
+                          d => d.radius + 15
+                        )
                     );
 
 
@@ -1134,7 +1464,10 @@ jobs:
                     .selectAll("line")
                     .data(links)
                     .join("line")
-                    .attr("class", "link");
+                    .attr(
+                      "class",
+                      "link"
+                    );
 
 
                 const node =
@@ -1143,52 +1476,82 @@ jobs:
                     .selectAll("g")
                     .data(nodes)
                     .join("g")
-                    .attr("class", "node");
+                    .attr(
+                      "class",
+                      "node"
+                    );
 
 
                 node
                   .append("circle")
-                  .attr("r", d => d.radius);
+                  .attr(
+                    "r",
+                    d => d.radius
+                  );
 
 
                 node
                   .append("text")
-                  .attr("x", d => d.radius + 6)
+                  .attr(
+                    "x",
+                    d => d.radius + 6
+                  )
                   .attr("y", 3)
-                  .text(d => d.id);
+                  .text(
+                    d => d.id
+                  );
 
 
-                svg.on("mousemove", function(event) {
+                /* Mouse interaction */
 
-                  if (reducedMotion) return;
+                svg.on(
+                  "mousemove",
+                  function(event) {
 
-                  const [mx, my] =
-                    d3.pointer(event, this);
+                    if (reducedMotion) {
+                      return;
+                    }
 
-                  simulation
-                    .force(
-                      "mouse",
-                      d3.forceRadial(
-                        90,
-                        mx,
-                        my
-                      ).strength(0.018)
-                    )
-                    .alpha(0.15)
-                    .restart();
+                    const [mx, my] =
+                      d3.pointer(
+                        event,
+                        this
+                      );
 
-                });
+                    simulation
+                      .force(
+                        "mouse",
+                        d3.forceRadial(
+                          90,
+                          mx,
+                          my
+                        )
+                        .strength(0.018)
+                      )
+                      .alpha(0.15)
+                      .restart();
+
+                  }
+                );
 
 
-                svg.on("mouseleave", function() {
+                svg.on(
+                  "mouseleave",
+                  function() {
 
-                  simulation
-                    .force("mouse", null)
-                    .alpha(0.15)
-                    .restart();
+                    simulation
+                      .force(
+                        "mouse",
+                        null
+                      )
+                      .alpha(0.15)
+                      .restart();
 
-                });
+                  }
+                );
 
+
+                /* Drag interaction */
 
                 if (!reducedMotion) {
 
@@ -1196,54 +1559,89 @@ jobs:
 
                     d3.drag()
 
-                      .on("start", function(event, d) {
+                      .on(
+                        "start",
+                        function(event, d) {
 
-                        if (!event.active) {
-                          simulation.alphaTarget(0.3).restart();
+                          if (!event.active) {
+
+                            simulation
+                              .alphaTarget(0.3)
+                              .restart();
+
+                          }
+
+                          d.fx = d.x;
+                          d.fy = d.y;
+
                         }
+                      )
 
-                        d.fx = d.x;
-                        d.fy = d.y;
+                      .on(
+                        "drag",
+                        function(event, d) {
 
-                      })
+                          d.fx = event.x;
+                          d.fy = event.y;
 
-                      .on("drag", function(event, d) {
-
-                        d.fx = event.x;
-                        d.fy = event.y;
-
-                      })
-
-                      .on("end", function(event, d) {
-
-                        if (!event.active) {
-                          simulation.alphaTarget(0);
                         }
+                      )
 
-                        d.fx = null;
-                        d.fy = null;
+                      .on(
+                        "end",
+                        function(event, d) {
 
-                      })
+                          if (!event.active) {
+
+                            simulation
+                              .alphaTarget(0);
+
+                          }
+
+                          d.fx = null;
+                          d.fy = null;
+
+                        }
+                      )
 
                   );
 
                 }
 
 
-                simulation.on("tick", () => {
+                /* Simulation */
 
-                  link
-                    .attr("x1", d => d.source.x)
-                    .attr("y1", d => d.source.y)
-                    .attr("x2", d => d.target.x)
-                    .attr("y2", d => d.target.y);
+                simulation.on(
+                  "tick",
+                  () => {
 
-                  node.attr(
-                    "transform",
-                    d => `translate(${d.x},${d.y})`
-                  );
+                    link
+                      .attr(
+                        "x1",
+                        d => d.source.x
+                      )
+                      .attr(
+                        "y1",
+                        d => d.source.y
+                      )
+                      .attr(
+                        "x2",
+                        d => d.target.x
+                      )
+                      .attr(
+                        "y2",
+                        d => d.target.y
+                      );
 
-                });
+
+                    node.attr(
+                      "transform",
+                      d =>
+                        `translate(${d.x},${d.y})`
+                    );
+
+                  }
+                );
 
               }
 
@@ -1251,18 +1649,27 @@ jobs:
               createNetwork();
 
 
+              /* Responsive resize */
+
               let resizeTimer;
 
-              window.addEventListener("resize", () => {
 
-                clearTimeout(resizeTimer);
+              window.addEventListener(
+                "resize",
+                () => {
 
-                resizeTimer = setTimeout(
-                  createNetwork,
-                  150
-                );
+                  clearTimeout(
+                    resizeTimer
+                  );
 
-              });
+                  resizeTimer =
+                    setTimeout(
+                      createNetwork,
+                      150
+                    );
+
+                }
+              );
 
             </script>
 
@@ -1275,6 +1682,7 @@ jobs:
         uses: actions/upload-pages-artifact@v4
         with:
           path: .
+
 
       - name: Deploy to GitHub Pages
         id: deployment
