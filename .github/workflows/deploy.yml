@@ -53,11 +53,12 @@ jobs:
               }
 
               /* =========================
-                 INTRO
+                 HERO
               ========================= */
 
               .hero {
                 min-height: 90vh;
+
                 display: flex;
                 align-items: center;
 
@@ -85,11 +86,13 @@ jobs:
                 justify-content: space-between;
 
                 padding-bottom: 18px;
+
                 border-bottom: 1px solid #d8d8d2;
 
                 font-family: monospace;
                 font-size: 0.7rem;
                 letter-spacing: 0.12em;
+
                 color: #666;
               }
 
@@ -100,20 +103,55 @@ jobs:
               .hero-main {
                 min-height: 65vh;
 
-                display: grid;
-                grid-template-columns: minmax(0, 1fr) 220px;
-
+                display: flex;
                 align-items: center;
-                gap: 20px;
+                justify-content: center;
+
+                text-align: center;
+              }
+
+              /* -------------------------
+                 HERO CONTENT
+              ------------------------- */
+
+              .hero-copy {
+                padding: 60px 0;
+
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+              }
+
+              /* -------------------------
+                 PROFILE IMAGE
+              ------------------------- */
+
+              .avatar {
+                width: 120px;
+                height: 120px;
+
+                margin-bottom: 35px;
+
+                border-radius: 50%;
+                overflow: hidden;
+
+                border: 4px solid white;
+
+                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+              }
+
+              .avatar img {
+                width: 100%;
+                height: 100%;
+
+                object-fit: cover;
+
+                filter: none;
               }
 
               /* -------------------------
                  TYPOGRAPHY
               ------------------------- */
-
-              .hero-copy {
-                padding: 60px 0;
-              }
 
               .eyebrow {
                 margin: 0 0 20px;
@@ -142,7 +180,7 @@ jobs:
               .hero-description {
                 max-width: 440px;
 
-                margin: 45px 0 30px;
+                margin: 45px auto 30px;
 
                 font-size: clamp(1rem, 1.5vw, 1.25rem);
                 line-height: 1.6;
@@ -156,6 +194,7 @@ jobs:
 
               .links {
                 display: flex;
+                justify-content: center;
                 gap: 25px;
                 flex-wrap: wrap;
               }
@@ -184,53 +223,19 @@ jobs:
               }
 
               /* -------------------------
-                 PROFILE IMAGE
-              ------------------------- */
-
-              .hero-visual {
-                min-height: auto;
-
-                display: flex;
-                align-items: center;
-                justify-content: flex-start;
-              }
-
-              .avatar {
-                width: 160px;
-                height: 160px;
-
-                border-radius: 50%;
-                overflow: hidden;
-
-                position: relative;
-                z-index: 2;
-
-                border: 4px solid white;
-
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
-              }
-
-              .avatar img {
-                width: 100%;
-                height: 100%;
-
-                object-fit: cover;
-
-                filter: none;
-              }
-
-              /* -------------------------
                  SCROLL
               ------------------------- */
 
               .scroll {
                 display: flex;
                 align-items: center;
+                justify-content: center;
+
                 gap: 12px;
 
                 width: fit-content;
 
-                margin-top: 20px;
+                margin: 20px auto 0;
 
                 color: #666;
 
@@ -257,14 +262,11 @@ jobs:
                 }
 
                 .hero-main {
-                  grid-template-columns: 1fr;
                   min-height: auto;
-
-                  gap: 20px;
                 }
 
                 .hero-copy {
-                  padding: 70px 0 30px;
+                  padding: 60px 0 30px;
                 }
 
                 .hero h1 {
@@ -275,14 +277,11 @@ jobs:
                   margin-top: 35px;
                 }
 
-                .hero-visual {
-                  min-height: auto;
-                  justify-content: flex-start;
-                }
-
                 .avatar {
-                  width: 150px;
-                  height: 150px;
+                  width: 110px;
+                  height: 110px;
+
+                  margin-bottom: 30px;
                 }
               }
 
@@ -292,6 +291,7 @@ jobs:
 
               .theme-toggle {
                 position: fixed;
+
                 top: 20px;
                 right: 20px;
 
@@ -305,6 +305,7 @@ jobs:
                 color: #222;
 
                 font-size: 20px;
+
                 cursor: pointer;
 
                 box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
@@ -360,7 +361,9 @@ jobs:
 
               body.dark .avatar {
                 border-color: #1e293b;
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+
+                box-shadow:
+                  0 10px 30px rgba(0, 0, 0, 0.35);
               }
 
               body.dark .scroll {
@@ -376,7 +379,10 @@ jobs:
 
           <body>
 
-          <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+          <button
+            class="theme-toggle"
+            id="themeToggle"
+            aria-label="Toggle dark mode">
             🌙
           </button>
 
@@ -385,6 +391,7 @@ jobs:
             ========================== -->
 
             <header class="hero">
+
               <div class="hero-inner">
 
                 <div class="hero-meta">
@@ -396,7 +403,15 @@ jobs:
 
                   <div class="hero-copy">
 
-                    <p class="eyebrow">HELLO, I'M</p>
+                    <div class="avatar">
+                      <img
+                        src="./Images/photo_profile.jpg"
+                        alt="Fabien Haury">
+                    </div>
+
+                    <p class="eyebrow">
+                      HELLO, I'M
+                    </p>
 
                     <h1>
                       Fabien<br>
@@ -424,7 +439,8 @@ jobs:
                         LinkedIn ↗
                       </a>
 
-                      <a href="mailto:fabienhaury@protonmail.com">
+                      <a
+                        href="mailto:fabienhaury@protonmail.com">
                         Email ↗
                       </a>
 
@@ -432,24 +448,17 @@ jobs:
 
                   </div>
 
-                  <div class="hero-visual">
-
-                    <div class="avatar">
-                      <img
-                        src="./Images/photo_profile.jpg"
-                        alt="Fabien Haury">
-                    </div>
-
-                  </div>
-
                 </div>
 
-                <a class="scroll" href="#course">
+                <a
+                  class="scroll"
+                  href="#course">
                   <span>SCROLL TO EXPLORE</span>
                   ↓
                 </a>
 
               </div>
+
             </header>
 
 
@@ -507,6 +516,7 @@ jobs:
 
             <footer>
               © 2026 Fabien Haury ·
+
               <a
                 href="https://github.com/FabienHaury"
                 target="_blank"
@@ -515,26 +525,40 @@ jobs:
               </a>
             </footer>
 
+
             <script>
-              const themeToggle = document.getElementById("themeToggle");
+
+              const themeToggle =
+                document.getElementById("themeToggle");
 
               // Restore saved theme
               if (localStorage.getItem("theme") === "dark") {
+
                 document.body.classList.add("dark");
+
                 themeToggle.textContent = "☀️";
               }
 
               themeToggle.addEventListener("click", () => {
+
                 document.body.classList.toggle("dark");
 
                 if (document.body.classList.contains("dark")) {
+
                   themeToggle.textContent = "☀️";
+
                   localStorage.setItem("theme", "dark");
+
                 } else {
+
                   themeToggle.textContent = "🌙";
+
                   localStorage.setItem("theme", "light");
+
                 }
+
               });
+
             </script>
 
 
