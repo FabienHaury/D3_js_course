@@ -110,10 +110,6 @@ jobs:
                 text-align: center;
               }
 
-              /* -------------------------
-                 HERO CONTENT
-              ------------------------- */
-
               .hero-copy {
                 padding: 60px 0;
 
@@ -250,9 +246,127 @@ jobs:
                 color: #2563eb;
               }
 
-              /* -------------------------
+              /* =========================
+                 COURSE
+              ========================= */
+
+              .course {
+                width: 100%;
+                max-width: 1000px;
+
+                margin: 0 auto;
+                padding: 90px 25px;
+
+                text-align: center;
+              }
+
+              .course-header {
+                margin-bottom: 55px;
+              }
+
+              .course-header h2 {
+                margin: 0;
+
+                font-size: 2rem;
+              }
+
+              .course-header p {
+                margin-top: 10px;
+
+                color: #64748b;
+              }
+
+              .course-section {
+                margin-bottom: 55px;
+              }
+
+              .course-section h3 {
+                margin: 0 0 20px;
+
+                font-size: 1.4rem;
+
+                text-transform: capitalize;
+              }
+
+              .course-section ul {
+                width: 100%;
+                max-width: 700px;
+
+                margin: 0 auto;
+
+                padding: 0;
+
+                list-style: none;
+              }
+
+              .course-section li {
+                margin: 10px 0;
+              }
+
+              .course-section li a {
+                display: block;
+
+                padding: 15px 20px;
+
+                background: white;
+
+                border: 1px solid #e2e8f0;
+                border-radius: 8px;
+
+                text-decoration: none;
+
+                color: #2563eb;
+
+                text-align: center;
+
+                box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+
+                transition: 0.2s ease;
+              }
+
+              .course-section li a:hover {
+                background: #2563eb;
+                color: white;
+
+                transform: translateY(-2px);
+
+                box-shadow:
+                  0 5px 15px rgba(0, 0, 0, 0.1);
+              }
+
+              /* =========================
+                 FOOTER
+              ========================= */
+
+              footer {
+                width: 100%;
+
+                padding: 30px 20px;
+
+                display: flex;
+                justify-content: center;
+                align-items: center;
+
+                text-align: center;
+
+                border-top: 1px solid #e2e8f0;
+
+                color: #64748b;
+
+                font-size: 0.9rem;
+              }
+
+              footer a {
+                margin-left: 4px;
+
+                color: #2563eb;
+
+                text-decoration: none;
+              }
+
+              /* =========================
                  MOBILE
-              ------------------------- */
+              ========================= */
 
               @media (max-width: 700px) {
 
@@ -283,6 +397,10 @@ jobs:
 
                   margin-bottom: 30px;
                 }
+
+                .course {
+                  padding: 60px 20px;
+                }
               }
 
               /* =========================
@@ -308,7 +426,8 @@ jobs:
 
                 cursor: pointer;
 
-                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+                box-shadow:
+                  0 2px 8px rgba(0, 0, 0, 0.1);
 
                 z-index: 1000;
 
@@ -320,7 +439,7 @@ jobs:
               }
 
               /* =========================
-                 DARK MODE — HERO
+                 DARK MODE
               ========================= */
 
               body.dark .hero {
@@ -371,6 +490,36 @@ jobs:
               }
 
               body.dark .scroll:hover {
+                color: #60a5fa;
+              }
+
+              body.dark .course {
+                background: #0f1115;
+                color: #f1f5f9;
+              }
+
+              body.dark .course-header p {
+                color: #94a3b8;
+              }
+
+              body.dark .course-section li a {
+                background: #1e293b;
+                border-color: #334155;
+                color: #60a5fa;
+              }
+
+              body.dark .course-section li a:hover {
+                background: #2563eb;
+                color: white;
+              }
+
+              body.dark footer {
+                border-color: #29303a;
+                color: #94a3b8;
+                background: #0b0d10;
+              }
+
+              body.dark footer a {
                 color: #60a5fa;
               }
 
@@ -469,11 +618,13 @@ jobs:
             <main id="course" class="course">
 
               <div class="course-header">
+
                 <h2>📚 D3.js Course</h2>
 
                 <p>
                   My collection of D3.js projects and exercises.
                 </p>
+
               </div>
 
           EOF
@@ -515,6 +666,7 @@ jobs:
             ========================== -->
 
             <footer>
+
               © 2026 Fabien Haury ·
 
               <a
@@ -523,6 +675,7 @@ jobs:
                 rel="noopener noreferrer">
                 GitHub
               </a>
+
             </footer>
 
 
@@ -537,6 +690,7 @@ jobs:
                 document.body.classList.add("dark");
 
                 themeToggle.textContent = "☀️";
+
               }
 
               themeToggle.addEventListener("click", () => {
