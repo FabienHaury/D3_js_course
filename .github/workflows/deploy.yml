@@ -575,24 +575,31 @@ jobs:
                     <div class="links">
 
                       <a
+                        href="https://www.react-graph-gallery.com/react-d3-dataviz-course"
+                        target="_blank"
+                        rel="noopener noreferrer">
+                        D3.js Course ↗
+                      </a>
+                    
+                      <a
                         href="https://github.com/FabienHaury"
                         target="_blank"
                         rel="noopener noreferrer">
                         GitHub ↗
                       </a>
-
+                    
                       <a
                         href="https://www.linkedin.com/in/fabienhaury/"
                         target="_blank"
                         rel="noopener noreferrer">
                         LinkedIn ↗
                       </a>
-
+                    
                       <a
                         href="mailto:fabienhaury@protonmail.com">
                         Email ↗
                       </a>
-
+                    
                     </div>
 
                   </div>
