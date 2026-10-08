@@ -101,10 +101,10 @@ jobs:
                 min-height: 65vh;
 
                 display: grid;
-                grid-template-columns: 1fr 280px;
+                grid-template-columns: minmax(0, 1fr) 220px;
 
                 align-items: center;
-                gap: 60px;
+                gap: 20px;
               }
 
               /* -------------------------
@@ -188,16 +188,16 @@ jobs:
               ------------------------- */
 
               .hero-visual {
-                min-height: 180px;
+                min-height: auto;
 
                 display: flex;
                 align-items: center;
-                justify-content: center;
+                justify-content: flex-start;
               }
 
               .avatar {
-                width: 180px;
-                height: 180px;
+                width: 160px;
+                height: 160px;
 
                 border-radius: 50%;
                 overflow: hidden;
@@ -276,7 +276,8 @@ jobs:
                 }
 
                 .hero-visual {
-                  min-height: 180px;
+                  min-height: auto;
+                  justify-content: flex-start;
                 }
 
                 .avatar {
