@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#f7f7f2">
+  <meta name="description" content="Fabien Haury — D3.js, data visualization, and creative coding.">
+
+  <title>Fabien Haury — D3.js & Data Visualization</title>
+
+  <link rel="stylesheet" href="./style.css">
+  <script src="https://cdn.jsdelivr.net/npm/d3@7"></script>
+  <script src="./script.js" defer></script>
+</head>
+
+<body>
+  <button
+    class="theme-toggle"
+    id="themeToggle"
+    type="button"
+    aria-label="Switch to dark mode"
+    aria-pressed="false">
+    🌙
+  </button>
+
+  <header class="hero">
+    <div class="hero-inner">
+
+      <div class="hero-meta">
+        <a class="hero-brand" href="./">FH<span>.</span></a>
+        <span>D3.JS / DATA VISUALIZATION</span>
+        <span>PORTFOLIO — 2026</span>
+      </div>
+
+      <div class="hero-main">
+
+        <div class="hero-copy">
+          <div class="avatar">
+            <img
+              src="./Images/photo_profile.jpg"
+              alt="Fabien Haury"
+              width="64"
+              height="64">
+          </div>
+
+          <p class="eyebrow">
+            <span class="status-dot"></span>
+            HELLO, I'M FABIEN
+          </p>
+
+          <h1>
+            Making data<br>
+            <span>visible.</span>
+          </h1>
+
+          <p class="hero-description">
+            Exploring the art of data visualization through
+            D3.js, creative coding, and interactive experiments.
+          </p>
+
+          <nav class="links" aria-label="Social links">
+            <a
+              class="primary-link"
+              href="https://www.react-graph-gallery.com/react-d3-dataviz-course"
+              target="_blank"
+              rel="noopener noreferrer">
+              Explore the course <span>↗</span>
+            </a>
+
+            <a
+              href="https://github.com/FabienHaury"
+              target="_blank"
+              rel="noopener noreferrer">
+              GitHub ↗
+            </a>
+
+            <a
+              href="https://www.linkedin.com/in/fabienhaury/"
+              target="_blank"
+              rel="noopener noreferrer">
+              LinkedIn ↗
+            </a>
+
+            <a href="mailto:fabienhaury@protonmail.com">
+              Email ↗
+            </a>
+          </nav>
+        </div>
+
+        <div class="hero-visual">
+          <div class="visual-label">
+            <span>FIG. 001</span>
+            <span>GENERATIVE DATA</span>
+          </div>
+
+          <svg
+            id="heroViz"
+            viewBox="0 0 500 500"
+            role="img"
+            aria-label="Animated network of interconnected data points">
+          </svg>
+
+          <div class="visual-caption">
+            <span>DATA IN MOTION</span>
+            <span>NODE NETWORK / 001</span>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="hero-bottom">
+        <span>INDEPENDENT EXPERIMENTS · BUILT WITH D3.JS</span>
+
+        <a class="scroll" href="#course">
+          DISCOVER THE PROJECTS <span>↓</span>
+        </a>
+      </div>
+
+    </div>
+  </header>
+
+  <main id="course" class="course">
+    <div class="course-header">
+      <h2>D3.js Course</h2>
+      <p>My collection of D3.js projects and exercises.</p>
+    </div>
+
+    <!-- COURSE_LISTINGS -->
+  </main>
+
+  <footer>
+    © 2026 Fabien Haury ·
+    <a
+      href="https://github.com/FabienHaury"
+      target="_blank"
+      rel="noopener noreferrer">
+      GitHub
+    </a>
+  </footer>
+</body>
+</html>
