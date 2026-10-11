@@ -44,6 +44,7 @@ a {
 
   min-height: 100vh;
   min-height: 100svh;
+
   display: flex;
   align-items: center;
 
@@ -256,34 +257,6 @@ a {
   overflow: hidden;
   border: 1px solid var(--hero-line);
   border-radius: 50%;
-}
-
-.visual-label,
-.visual-caption {
-  position: absolute;
-  z-index: 1;
-
-  left: 10%;
-  right: 10%;
-
-  display: flex;
-  justify-content: space-between;
-  gap: 12px;
-
-  color: var(--hero-muted);
-  font-family: monospace;
-  font-size: 0.62rem;
-  letter-spacing: 0.08em;
-
-  pointer-events: none;
-}
-
-.visual-label {
-  top: 10%;
-}
-
-.visual-caption {
-  bottom: 10%;
 }
 
 #heroViz {
@@ -585,11 +558,6 @@ body.dark footer a {
 
   .links .primary-link {
     width: 100%;
-  }
-
-  .visual-label,
-  .visual-caption {
-    font-size: 0.55rem;
   }
 
   .hero-bottom {
