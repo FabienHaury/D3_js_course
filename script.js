@@ -55,19 +55,18 @@
 })();
 
 
+
+
 /* =========================
    D3.JS HERO VISUALIZATION
 ========================= */
 
 (() => {
   const svg = d3.select("#heroViz");
-
   if (svg.empty()) return;
 
   const width = 500;
   const height = 500;
-  const count = 100;
-
   const hero = document.querySelector(".hero");
 
   const getAccent = () =>
@@ -75,205 +74,292 @@
       .getPropertyValue("--hero-accent")
       .trim() || "#426b52";
 
-  // Arrange points using a golden-angle spiral.
-  const nodes = d3.range(count).map((i) => {
-    const angle = i * Math.PI * (3 - Math.sqrt(5));
-    const radius = 25 + Math.sqrt(i / count) * 195;
-
-    return {
-      id: i,
-      x: width / 2 + Math.cos(angle) * radius,
-      y: height / 2 + Math.sin(angle) * radius,
-      r: i % 9 === 0 ? 4 : 2
-    };
-  });
-
-  // Connect nearby points.
-  const links = [];
-
-  nodes.forEach((node, i) => {
-    nodes.slice(i + 1).forEach((other) => {
-      const distance = Math.hypot(
-        node.x - other.x,
-        node.y - other.y
-      );
-
-      if (distance < 58) {
-        links.push({
-          source: node.id,
-          target: other.id
-        });
-      }
-    });
-  });
-
-  const root = svg.append("g");
-
-  // Draw network connections.
-  const lines = root
-    .selectAll("line")
-    .data(links)
-    .join("line")
-    .attr("x1", (d) => nodes[d.source].x)
-    .attr("y1", (d) => nodes[d.source].y)
-    .attr("x2", (d) => nodes[d.target].x)
-    .attr("y2", (d) => nodes[d.target].y)
-    .attr("stroke", getAccent())
-    .attr("stroke-opacity", 0.19)
-    .attr("stroke-width", 0.7);
-
-  // Draw network nodes.
-  const dots = root
-    .selectAll("circle.node")
-    .data(nodes)
-    .join("circle")
-    .attr("class", "node")
-    .attr("cx", (d) => d.x)
-    .attr("cy", (d) => d.y)
-    .attr("r", (d) => d.r)
-    .attr("fill", getAccent())
-    .attr("fill-opacity", (d) => d.r === 4 ? 0.95 : 0.55);
-
-  /* =========================
-     LIVELY NETWORK ANIMATION
-  ========================= */
-
+  const accent = getAccent();
   const motion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   );
 
-  // Give every node its own movement pattern.
-  nodes.forEach((node) => {
-    node.phase = Math.random() * Math.PI * 2;
-    node.speed = 0.45 + Math.random() * 0.9;
-    node.drift = 4 + Math.random() * 9;
-    node.currentX = node.x;
-    node.currentY = node.y;
-  });
+  const root = svg.append("g").attr("class", "hero-data-viz");
 
-  // Highlight selected nodes as animated signals.
-  const signals = root
-    .selectAll("circle.signal")
-    .data(nodes.filter((d) => d.id % 12 === 0))
-    .join("circle")
-    .attr("class", "signal")
-    .attr("r", 4)
-    .attr("fill", "#ffffff")
-    .attr("stroke", getAccent())
-    .attr("stroke-width", 2)
-    .attr("pointer-events", "none");
+  // Synthetic data for the table and scatter plot.
+  const data = d3.range(12).map((i) => ({
+    id: 1042 + i,
+    x: 8 + i * 6.1,
+    y: 12 + i * 2.15 + Math.sin(i * 1.1) * 5,
+    group: i % 3 === 0 ? "B" : "A"
+  }));
 
-  let frame;
-  let startTime;
+  const xScale = d3.scaleLinear()
+    .domain([0, 85])
+    .range([95, 415]);
 
-  function animate(time) {
-    if (startTime === undefined) {
-      startTime = time;
-    }
+  const yScale = d3.scaleLinear()
+    .domain([0, 50])
+    .range([400, 110]);
 
-    const elapsed = (time - startTime) / 1000;
+  // Small heading above the graphic.
+  const heading = root.append("text")
+    .attr("class", "viz-label")
+    .attr("x", width / 2)
+    .attr("y", 70)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "monospace")
+    .attr("font-size", 11)
+    .attr("letter-spacing", 2)
+    .attr("fill", accent)
+    .text("RAW DATA");
 
-    // Give the entire network a gentle floating motion.
-    root.attr(
-      "transform",
-      `translate(${Math.sin(elapsed * 0.65) * 12}, ${Math.cos(elapsed * 0.5) * 12}) rotate(${Math.sin(elapsed * 0.22) * 2}, 250, 250)`
+  // -------------------------
+  // TABLE
+  // -------------------------
+
+  const table = root.append("g")
+    .attr("class", "data-table");
+
+  const columns = [
+    { label: "ID", x: 76 },
+    { label: "X", x: 165 },
+    { label: "Y", x: 255 },
+    { label: "GROUP", x: 345 }
+  ];
+
+  table.selectAll(".table-heading")
+    .data(columns)
+    .join("text")
+    .attr("class", "table-heading")
+    .attr("x", (d) => d.x)
+    .attr("y", 112)
+    .attr("font-family", "monospace")
+    .attr("font-size", 10)
+    .attr("fill", accent)
+    .text((d) => d.label);
+
+  const rows = table.selectAll(".table-row")
+    .data(data)
+    .join("g")
+    .attr("class", "table-row")
+    .attr("transform", (d, i) =>
+      `translate(0, ${137 + i * 22})`
     );
 
-    // Let every node drift independently.
-    nodes.forEach((node) => {
-      const t = elapsed * node.speed + node.phase;
+  rows.append("line")
+    .attr("class", "table-rule")
+    .attr("x1", 68)
+    .attr("x2", 430)
+    .attr("y1", 6)
+    .attr("y2", 6)
+    .attr("stroke", accent)
+    .attr("stroke-opacity", 0.2);
 
-      node.currentX =
-        node.x + Math.cos(t) * node.drift;
+  rows.each(function (d) {
+    const values = [
+      d.id,
+      d.x.toFixed(1),
+      d.y.toFixed(1),
+      d.group
+    ];
 
-      node.currentY =
-        node.y + Math.sin(t * 0.83) * node.drift;
-    });
+    d3.select(this)
+      .selectAll("text")
+      .data(values)
+      .join("text")
+      .attr("class", "table-value")
+      .attr("x", (value, i) => columns[i].x)
+      .attr("y", 0)
+      .attr("font-family", "monospace")
+      .attr("font-size", 10)
+      .attr("fill", accent)
+      .attr("fill-opacity", 0.85)
+      .text((value) => value);
+  });
 
-    // Connections follow moving nodes and pulse gently.
-    lines
-      .attr("x1", (d) => nodes[d.source].currentX)
-      .attr("y1", (d) => nodes[d.source].currentY)
-      .attr("x2", (d) => nodes[d.target].currentX)
-      .attr("y2", (d) => nodes[d.target].currentY)
-      .attr("stroke-opacity", (d, i) =>
-        0.12 +
-        (0.16 * (1 + Math.sin(elapsed * 1.5 + i * 0.17))) / 2
-      );
+  // -------------------------
+  // SCATTER PLOT
+  // -------------------------
 
-    // Nodes drift, pulse, and vary slightly in size.
-    dots
-      .attr("cx", (d) => d.currentX)
-      .attr("cy", (d) => d.currentY)
-      .attr("r", (d) =>
-        (d.r === 4 ? 4 : 2) +
-        (d.r === 4 ? 1.2 : 0.65) *
-        (0.5 + 0.5 * Math.sin(elapsed * 2 + d.phase))
-      )
-      .attr("fill-opacity", (d) =>
-        0.4 +
-        0.6 * (0.5 + 0.5 * Math.sin(elapsed * 1.8 + d.phase))
-      );
+  const chart = root.append("g")
+    .attr("class", "data-chart")
+    .attr("opacity", 0);
 
-    // Highlighted points pulse as signals.
-    signals
-      .attr("cx", (d) => d.currentX)
-      .attr("cy", (d) => d.currentY)
-      .attr("r", (d) =>
-        3 + 2 * (0.5 + 0.5 * Math.sin(elapsed * 3 + d.phase))
-      )
-      .attr("opacity", (d) =>
-        0.45 +
-        0.55 * (0.5 + 0.5 * Math.sin(elapsed * 2.5 + d.phase))
-      );
+  const grid = chart.append("g")
+    .attr("class", "chart-grid");
 
-    frame = requestAnimationFrame(animate);
-  }
+  grid.selectAll("line")
+    .data([10, 20, 30, 40])
+    .join("line")
+    .attr("x1", 85)
+    .attr("x2", 420)
+    .attr("y1", (d) => yScale(d))
+    .attr("y2", (d) => yScale(d))
+    .attr("stroke", accent)
+    .attr("stroke-opacity", 0.14)
+    .attr("stroke-dasharray", "3 5");
 
-  function stopAnimation() {
-    if (frame !== undefined) {
-      cancelAnimationFrame(frame);
-      frame = undefined;
+  const axes = chart.append("g")
+    .attr("class", "chart-axes")
+    .attr("fill", "none")
+    .attr("stroke", accent)
+    .attr("stroke-opacity", 0.75);
+
+  axes.append("line")
+    .attr("x1", 85)
+    .attr("x2", 85)
+    .attr("y1", 105)
+    .attr("y2", 405);
+
+  axes.append("line")
+    .attr("x1", 85)
+    .attr("x2", 420)
+    .attr("y1", 405)
+    .attr("y2", 405);
+
+  chart.append("text")
+    .attr("class", "axis-label")
+    .attr("x", 250)
+    .attr("y", 445)
+    .attr("text-anchor", "middle")
+    .attr("font-family", "monospace")
+    .attr("font-size", 10)
+    .attr("fill", accent)
+    .text("VARIABLE X");
+
+  chart.append("text")
+    .attr("class", "axis-label")
+    .attr("transform", "translate(48,255) rotate(-90)")
+    .attr("text-anchor", "middle")
+    .attr("font-family", "monospace")
+    .attr("font-size", 10)
+    .attr("fill", accent)
+    .text("VARIABLE Y");
+
+  // Points begin in table-like positions.
+  const points = chart.selectAll("circle")
+    .data(data)
+    .join("circle")
+    .attr("class", "chart-point")
+    .attr("cx", (d, i) => 80 + (i % 4) * 88)
+    .attr("cy", (d, i) => 145 + Math.floor(i / 4) * 65)
+    .attr("r", 4)
+    .attr("fill", accent)
+    .attr("fill-opacity", 0);
+
+  const trend = chart.append("line")
+    .attr("class", "trend-line")
+    .attr("x1", xScale(5))
+    .attr("y1", yScale(15))
+    .attr("x2", xScale(75))
+    .attr("y2", yScale(35))
+    .attr("stroke", accent)
+    .attr("stroke-width", 2.5)
+    .attr("stroke-linecap", "round")
+    .attr("stroke-dasharray", 400)
+    .attr("stroke-dashoffset", 400);
+
+  // -------------------------
+  // ANIMATION
+  // -------------------------
+
+  let cycleTimer;
+  let destroyed = false;
+
+  function stopTransitions() {
+    root.selectAll("*").interrupt();
+
+    if (cycleTimer) {
+      clearTimeout(cycleTimer);
+      cycleTimer = undefined;
     }
   }
 
-  function resetPositions() {
-    root.attr("transform", null);
+  function showStaticChart() {
+    stopTransitions();
 
-    nodes.forEach((node) => {
-      node.currentX = node.x;
-      node.currentY = node.y;
-    });
+    table.attr("opacity", 0);
+    heading.text("PATTERNS EMERGE");
 
-    lines
-      .attr("x1", (d) => nodes[d.source].x)
-      .attr("y1", (d) => nodes[d.source].y)
-      .attr("x2", (d) => nodes[d.target].x)
-      .attr("y2", (d) => nodes[d.target].y)
-      .attr("stroke-opacity", 0.19);
+    chart.attr("opacity", 1);
 
-    dots
-      .attr("cx", (d) => d.x)
-      .attr("cy", (d) => d.y)
-      .attr("r", (d) => d.r)
-      .attr("fill-opacity", (d) => d.r === 4 ? 0.95 : 0.55);
+    points
+      .attr("cx", (d) => xScale(d.x))
+      .attr("cy", (d) => yScale(d.y))
+      .attr("r", 4.5)
+      .attr("fill-opacity", 0.9);
 
-    signals.attr("opacity", 0);
+    trend.attr("stroke-dashoffset", 0);
   }
 
-  function updateMotion() {
-    stopAnimation();
+  function runCycle() {
+    if (destroyed) return;
+
+    stopTransitions();
 
     if (motion.matches) {
-      resetPositions();
+      showStaticChart();
       return;
     }
 
-    startTime = undefined;
+    // Start with the dense data table.
+    heading.text("RAW DATA");
+    table.attr("opacity", 1);
 
-    signals.attr("opacity", 1);
+    points
+      .attr("cx", (d, i) => 80 + (i % 4) * 88)
+      .attr("cy", (d, i) => 145 + Math.floor(i / 4) * 65)
+      .attr("r", 3)
+      .attr("fill-opacity", 0);
 
-    frame = requestAnimationFrame(animate);
+    chart.attr("opacity", 0);
+    trend.attr("stroke-dashoffset", 400);
+
+    // Fade the table away.
+    table.transition()
+      .delay(2200)
+      .duration(500)
+      .attr("opacity", 0)
+      .on("end", () => {
+        if (destroyed || motion.matches) return;
+
+        heading.text("PATTERNS EMERGE");
+
+        chart.transition()
+          .duration(600)
+          .attr("opacity", 1);
+
+        // Transform the data points into the scatter plot.
+        points.transition()
+          .duration(1300)
+          .delay((d, i) => i * 35)
+          .attr("cx", (d) => xScale(d.x))
+          .attr("cy", (d) => yScale(d.y))
+          .attr("r", 4.5)
+          .attr("fill-opacity", 0.9);
+
+        // Reveal the trend after the points have appeared.
+        cycleTimer = setTimeout(() => {
+          if (destroyed || motion.matches) return;
+
+          heading.text("TREND REVEALED");
+
+          trend.transition()
+            .duration(1000)
+            .attr("stroke-dashoffset", 0)
+            .on("end", () => {
+              if (destroyed || motion.matches) return;
+
+              cycleTimer = setTimeout(runCycle, 1800);
+            });
+        }, 1900);
+      });
+  }
+
+  function updateMotion() {
+    stopTransitions();
+
+    if (motion.matches) {
+      showStaticChart();
+    } else {
+      runCycle();
+    }
   }
 
   if (motion.addEventListener) {
@@ -282,22 +368,32 @@
     motion.addListener(updateMotion);
   }
 
-  updateMotion();
-
-  /* =========================
-     THEME-AWARE COLORS
-  ========================= */
-
+  // Keep visualization colors synchronized with the theme.
   const observer = new MutationObserver(() => {
     const color = getAccent();
 
-    lines.attr("stroke", color);
-    dots.attr("fill", color);
-    signals.attr("stroke", color);
+    root.selectAll(
+      ".viz-label, .table-heading, .table-value, .axis-label"
+    ).attr("fill", color);
+
+    root.selectAll(
+      ".table-rule, .chart-grid line, .chart-axes line, .trend-line"
+    ).attr("stroke", color);
+
+    points.attr("fill", color);
   });
 
   observer.observe(document.body, {
     attributes: true,
     attributeFilter: ["class"]
   });
+
+  updateMotion();
+
+  // Clean up when leaving the page.
+  window.addEventListener("pagehide", () => {
+    destroyed = true;
+    stopTransitions();
+    observer.disconnect();
+  }, { once: true });
 })();
