@@ -109,65 +109,171 @@
 
   const root = svg.append("g");
 
+  // Draw network connections.
   const lines = root
     .selectAll("line")
     .data(links)
     .join("line")
-    .attr("x1", d => nodes[d.source].x)
-    .attr("y1", d => nodes[d.source].y)
-    .attr("x2", d => nodes[d.target].x)
-    .attr("y2", d => nodes[d.target].y)
+    .attr("x1", (d) => nodes[d.source].x)
+    .attr("y1", (d) => nodes[d.source].y)
+    .attr("x2", (d) => nodes[d.target].x)
+    .attr("y2", (d) => nodes[d.target].y)
     .attr("stroke", getAccent())
     .attr("stroke-opacity", 0.19)
     .attr("stroke-width", 0.7);
 
+  // Draw network nodes.
   const dots = root
-    .selectAll("circle")
+    .selectAll("circle.node")
     .data(nodes)
     .join("circle")
-    .attr("cx", d => d.x)
-    .attr("cy", d => d.y)
-    .attr("r", d => d.r)
+    .attr("class", "node")
+    .attr("cx", (d) => d.x)
+    .attr("cy", (d) => d.y)
+    .attr("r", (d) => d.r)
     .attr("fill", getAccent())
-    .attr("fill-opacity", d => d.r === 4 ? 0.95 : 0.55);
+    .attr("fill-opacity", (d) => d.r === 4 ? 0.95 : 0.55);
 
-  // Animate unless the user prefers reduced motion.
+  /* =========================
+     LIVELY NETWORK ANIMATION
+  ========================= */
+
   const motion = window.matchMedia(
     "(prefers-reduced-motion: reduce)"
   );
 
+  // Give every node its own movement pattern.
+  nodes.forEach((node) => {
+    node.phase = Math.random() * Math.PI * 2;
+    node.speed = 0.45 + Math.random() * 0.9;
+    node.drift = 4 + Math.random() * 9;
+    node.currentX = node.x;
+    node.currentY = node.y;
+  });
+
+  // Highlight selected nodes as animated signals.
+  const signals = root
+    .selectAll("circle.signal")
+    .data(nodes.filter((d) => d.id % 12 === 0))
+    .join("circle")
+    .attr("class", "signal")
+    .attr("r", 4)
+    .attr("fill", "#ffffff")
+    .attr("stroke", getAccent())
+    .attr("stroke-width", 2)
+    .attr("pointer-events", "none");
+
   let frame;
+  let startTime;
 
   function animate(time) {
-    const t = time * 0.00015;
+    if (startTime === undefined) {
+      startTime = time;
+    }
 
+    const elapsed = (time - startTime) / 1000;
+
+    // Give the entire network a gentle floating motion.
     root.attr(
       "transform",
-      `translate(${Math.sin(t) * 5}, ${Math.cos(t * 0.8) * 5})`
+      `translate(${Math.sin(elapsed * 0.65) * 12}, ${Math.cos(elapsed * 0.5) * 12}) rotate(${Math.sin(elapsed * 0.22) * 2}, 250, 250)`
     );
 
+    // Let every node drift independently.
+    nodes.forEach((node) => {
+      const t = elapsed * node.speed + node.phase;
+
+      node.currentX =
+        node.x + Math.cos(t) * node.drift;
+
+      node.currentY =
+        node.y + Math.sin(t * 0.83) * node.drift;
+    });
+
+    // Connections follow moving nodes and pulse gently.
+    lines
+      .attr("x1", (d) => nodes[d.source].currentX)
+      .attr("y1", (d) => nodes[d.source].currentY)
+      .attr("x2", (d) => nodes[d.target].currentX)
+      .attr("y2", (d) => nodes[d.target].currentY)
+      .attr("stroke-opacity", (d, i) =>
+        0.12 +
+        (0.16 * (1 + Math.sin(elapsed * 1.5 + i * 0.17))) / 2
+      );
+
+    // Nodes drift, pulse, and vary slightly in size.
     dots
-      .attr("cx", d => d.x + Math.sin(t + d.id) * 2)
-      .attr("cy", d => d.y + Math.cos(t + d.id * 0.7) * 2);
+      .attr("cx", (d) => d.currentX)
+      .attr("cy", (d) => d.currentY)
+      .attr("r", (d) =>
+        (d.r === 4 ? 4 : 2) +
+        (d.r === 4 ? 1.2 : 0.65) *
+        (0.5 + 0.5 * Math.sin(elapsed * 2 + d.phase))
+      )
+      .attr("fill-opacity", (d) =>
+        0.4 +
+        0.6 * (0.5 + 0.5 * Math.sin(elapsed * 1.8 + d.phase))
+      );
+
+    // Highlighted points pulse as signals.
+    signals
+      .attr("cx", (d) => d.currentX)
+      .attr("cy", (d) => d.currentY)
+      .attr("r", (d) =>
+        3 + 2 * (0.5 + 0.5 * Math.sin(elapsed * 3 + d.phase))
+      )
+      .attr("opacity", (d) =>
+        0.45 +
+        0.55 * (0.5 + 0.5 * Math.sin(elapsed * 2.5 + d.phase))
+      );
 
     frame = requestAnimationFrame(animate);
   }
 
-  function updateMotion() {
+  function stopAnimation() {
     if (frame !== undefined) {
       cancelAnimationFrame(frame);
       frame = undefined;
     }
+  }
 
+  function resetPositions() {
     root.attr("transform", null);
 
-    dots
-      .attr("cx", d => d.x)
-      .attr("cy", d => d.y);
+    nodes.forEach((node) => {
+      node.currentX = node.x;
+      node.currentY = node.y;
+    });
 
-    if (!motion.matches) {
-      frame = requestAnimationFrame(animate);
+    lines
+      .attr("x1", (d) => nodes[d.source].x)
+      .attr("y1", (d) => nodes[d.source].y)
+      .attr("x2", (d) => nodes[d.target].x)
+      .attr("y2", (d) => nodes[d.target].y)
+      .attr("stroke-opacity", 0.19);
+
+    dots
+      .attr("cx", (d) => d.x)
+      .attr("cy", (d) => d.y)
+      .attr("r", (d) => d.r)
+      .attr("fill-opacity", (d) => d.r === 4 ? 0.95 : 0.55);
+
+    signals.attr("opacity", 0);
+  }
+
+  function updateMotion() {
+    stopAnimation();
+
+    if (motion.matches) {
+      resetPositions();
+      return;
     }
+
+    startTime = undefined;
+
+    signals.attr("opacity", 1);
+
+    frame = requestAnimationFrame(animate);
   }
 
   if (motion.addEventListener) {
@@ -178,12 +284,16 @@
 
   updateMotion();
 
-  // Update visualization colors when the theme changes.
+  /* =========================
+     THEME-AWARE COLORS
+  ========================= */
+
   const observer = new MutationObserver(() => {
     const color = getAccent();
 
     lines.attr("stroke", color);
     dots.attr("fill", color);
+    signals.attr("stroke", color);
   });
 
   observer.observe(document.body, {
