@@ -338,13 +338,15 @@ a {
    COURSE
 ========================= */
 
+
 .course {
   width: 100%;
-  max-width: 1000px;
+  max-width: none;
   margin: 0 auto;
-  padding: 90px 25px;
+  padding: 90px clamp(22px, 5vw, 80px);
   text-align: center;
 }
+
 
 .course-header {
   margin-bottom: 55px;
