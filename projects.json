@@ -5,7 +5,7 @@
       "projects": [
         {
           "name": "Pokemon project",
-          "description": "n interactive Pokémon explorer.",
+          "description": "An interactive Pokémon explorer.",
           "url": "https://fabienhaury.github.io/react-foundation/"
         }
       ]
