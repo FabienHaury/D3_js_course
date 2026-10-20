@@ -1,11 +1,11 @@
 {
   "sections": [
     {
-      "name": "React",
+      "name": "React Foundation",
       "projects": [
         {
-          "name": "React Foundation",
-          "description": "React project and experiments.",
+          "name": "Pokemon project",
+          "description": "n interactive Pokémon explorer.",
           "url": "https://fabienhaury.github.io/react-foundation/"
         }
       ]
