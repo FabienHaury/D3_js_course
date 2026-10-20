@@ -1,0 +1,18 @@
+{
+  "sections": [
+    {
+      "name": "React",
+      "projects": [
+        {
+          "name": "React Foundation",
+          "description": "React project and experiments.",
+          "url": "https://fabienhaury.github.io/react-foundation/"
+        }
+      ]
+    },
+    {
+      "name": "D3.js",
+      "projects": []
+    }
+  ]
+}
