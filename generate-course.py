@@ -1,3 +1,4 @@
+
 import json
 from html import escape
 from pathlib import Path
@@ -5,62 +6,116 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 INDEX = ROOT / "index.html"
 PROJECTS_FILE = ROOT / "projects.json"
-PLACEHOLDER = "<!-- COURSE_LISTINGS -->"
+PERSONAL_FILE = ROOT / "personal-projects.json"
+
+COURSE_PLACEHOLDER = "<!-- COURSE_LISTINGS -->"
+PERSONAL_PLACEHOLDER = "<!-- PERSONAL_PROJECT_LISTINGS -->"
+
+
+def load_json(path):
+    try:
+        return json.loads(path.read_text(encoding="utf-8"))
+    except FileNotFoundError:
+        raise SystemExit(f"Missing JSON file: {path}")
+    except json.JSONDecodeError as exc:
+        raise SystemExit(f"Invalid JSON in {path}: {exc}")
+
+
+def render_project(project):
+    name = escape(str(project["name"]))
+    description = escape(str(project.get("description", "")))
+    url = escape(str(project["url"]), quote=True)
+
+    description_html = (
+        f'<p class="project-description">{description}</p>'
+        if description else ""
+    )
+
+    return (
+        '<li class="project-card">\n'
+        f'  <h4><a href="{url}" target="_blank" '
+        f'rel="noopener noreferrer">{name}</a></h4>\n'
+        f'  {description_html}\n'
+        '</li>'
+    )
+
+
+def render_course(data):
+    sections = []
+
+    for section in data.get("sections", []):
+        projects = [
+            render_project(project)
+            for project in section.get("projects", [])
+        ]
+
+        if not projects:
+            continue
+
+        section_name = escape(str(section["name"]))
+
+        sections.append(
+            '<section class="course-section">\n'
+            f'  <h3>{section_name}</h3>\n'
+            '  <ul class="project-list">\n'
+            + "\n".join(projects)
+            + '\n  </ul>\n'
+            '</section>'
+        )
+
+    if not sections:
+        return (
+            '<p class="course-empty">'
+            'Projects will appear here as they are added.'
+            '</p>'
+        )
+
+    return "\n\n".join(sections)
+
+
+def render_personal_projects(data):
+    projects = [
+        render_project(project)
+        for project in data.get("projects", [])
+    ]
+
+    if not projects:
+        return (
+            '<p class="course-empty">'
+            'Personal projects will appear here as they are added.'
+            '</p>'
+        )
+
+    return (
+        '<ul class="project-list">\n'
+        + "\n".join(projects)
+        + '\n</ul>'
+    )
+
 
 html = INDEX.read_text(encoding="utf-8")
-projects_data = json.loads(PROJECTS_FILE.read_text(encoding="utf-8"))
 
-if html.count(PLACEHOLDER) != 1:
-    raise SystemExit(
-        f"Expected exactly one {PLACEHOLDER} in {INDEX}"
-    )
+# Validate both placeholders before modifying the file.
+for placeholder in (COURSE_PLACEHOLDER, PERSONAL_PLACEHOLDER):
+    count = html.count(placeholder)
 
-sections = []
-
-for section in projects_data.get("sections", []):
-    items = []
-
-    for project in section.get("projects", []):
-        name = escape(project["name"])
-        description = escape(project.get("description", ""))
-        url = escape(project["url"], quote=True)
-
-        description_html = (
-            f'<p class="project-description">{description}</p>'
-            if description else ""
+    if count != 1:
+        raise SystemExit(
+            f"Expected exactly one {placeholder} in {INDEX}, found {count}"
         )
 
-        items.append(
-            '<li class="project-card">\n'
-            f'  <h4><a href="{url}">{name} ↗</a></h4>\n'
-            f'  {description_html}\n'
-            '</li>'
-        )
+# Load and render both project collections.
+course_data = load_json(PROJECTS_FILE)
+personal_data = load_json(PERSONAL_FILE)
 
-    if not items:
-        continue
+course_html = render_course(course_data)
+personal_html = render_personal_projects(personal_data)
 
-    section_name = escape(section["name"])
+# Replace both placeholders in memory.
+generated = html.replace(COURSE_PLACEHOLDER, course_html)
+generated = generated.replace(PERSONAL_PLACEHOLDER, personal_html)
 
-    sections.append(
-        '<section class="course-section">\n'
-        f'  <h3>{section_name}</h3>\n'
-        '  <ul class="project-list">\n'
-        + "\n".join(items)
-        + '\n  </ul>\n'
-        '</section>'
-    )
-
-replacement = "\n\n".join(sections)
-
-if not replacement:
-    replacement = (
-        '<p class="course-empty">'
-        'Projects will appear here as they are added.'
-        '</p>'
-    )
-
-generated = html.replace(PLACEHOLDER, replacement)
+# Write only after both collections have been processed successfully.
 INDEX.write_text(generated, encoding="utf-8")
 
-print(f"Generated homepage with {len(sections)} project sections.")
+print("Generated homepage with course and personal projects.")
