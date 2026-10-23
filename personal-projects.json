@@ -1,0 +1,15 @@
+
+{
+  "projects": [
+    {
+      "name": "Portfolio Website",
+      "description": "My personal portfolio built with HTML, CSS, and JavaScript.",
+      "url": "https://github.com/FabienHaury"
+    },
+    {
+      "name": "Data Explorer",
+      "description": "An experiment in interactive data exploration.",
+      "url": "https://example.com/data-explorer"
+    }
+  ]
+}
