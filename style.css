@@ -102,8 +102,27 @@ a {
   color: var(--hero-accent);
 }
 
+.hero-nav {
+  color: var(--hero-text);
+  text-decoration: none;
+  transition: color 180ms ease;
+}
+
+.hero-nav span {
+  display: inline-block;
+  transition: transform 180ms ease;
+}
+
+.hero-nav:hover {
+  color: var(--hero-accent);
+}
+
+.hero-nav:hover span {
+  transform: translateY(3px);
+}
+
 /* =========================
-   MAIN LAYOUT
+   MAIN HERO LAYOUT
 ========================= */
 
 .hero-main {
@@ -156,7 +175,7 @@ a {
 }
 
 /* =========================
-   TYPOGRAPHY
+   HERO TYPOGRAPHY
 ========================= */
 
 .eyebrow {
@@ -203,7 +222,7 @@ a {
 }
 
 /* =========================
-   LINKS
+   HERO LINKS
 ========================= */
 
 .links {
@@ -244,7 +263,7 @@ a {
 }
 
 /* =========================
-   D3 VISUALIZATION
+   D3.JS VISUALIZATION
 ========================= */
 
 .hero-visual {
@@ -266,35 +285,12 @@ a {
 }
 
 /* =========================
-   BOTTOM NAVIGATION
+   HERO BOTTOM
 ========================= */
 
 .hero-bottom {
   padding-top: 20px;
   border-top: 1px solid var(--hero-line);
-}
-
-.scroll {
-  display: inline-flex;
-  align-items: center;
-  gap: 12px;
-
-  color: var(--hero-text);
-  text-decoration: none;
-  transition: color 180ms ease;
-}
-
-.scroll:hover {
-  color: var(--hero-accent);
-}
-
-.scroll span {
-  display: inline-block;
-  transition: transform 180ms ease;
-}
-
-.scroll:hover span {
-  transform: translateY(4px);
 }
 
 /* =========================
@@ -334,80 +330,104 @@ a {
   transform: scale(1.08);
 }
 
+.theme-toggle:focus-visible,
+a:focus-visible {
+  outline: 2px solid #426b52;
+  outline-offset: 4px;
+}
+
 /* =========================
-   COURSE
+   PROJECTS SECTION
 ========================= */
 
+.projects {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: start;
+  gap: clamp(28px, 4vw, 64px);
 
-.course {
   width: 100%;
-  max-width: none;
+  max-width: 1600px;
   margin: 0 auto;
   padding: 90px clamp(22px, 5vw, 80px);
+
   text-align: center;
 }
 
+/* Each column */
 
-.course-header {
-  margin-bottom: 64px;
+.project-column {
+  min-width: 0;
+}
+
+/* Column headings */
+
+.project-column .course-header {
+  margin-bottom: 40px;
 }
 
 .course-header h2 {
   margin: 0;
-  font-size: clamp(2.2rem, 4vw, 3.5rem);
+
+  font-size: clamp(2rem, 3.2vw, 3rem);
   font-weight: 750;
   letter-spacing: -0.065em;
   line-height: 1.05;
 }
 
 .course-header p {
-  max-width: 600px;
+  max-width: 440px;
   margin: 18px auto 0;
+
   color: #74776e;
-  font-size: 1.05rem;
+  font-size: 1rem;
   line-height: 1.8;
 }
 
-
+/* =========================
+   GENERATED COURSE SECTIONS
+========================= */
 
 .course-section {
-  margin-bottom: 64px;
+  margin-bottom: 42px;
+}
+
+.course-section:last-child {
+  margin-bottom: 0;
 }
 
 .course-section h3 {
-  margin: 0 0 24px;
-  font-size: 1.15rem;
+  margin: 0 0 20px;
+
+  font-size: 1.05rem;
   font-weight: 700;
   letter-spacing: -0.025em;
   text-transform: capitalize;
 }
 
+/* =========================
+   PROJECT LISTS
+========================= */
+
+.project-list,
 .course-section ul {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 14px;
+
   width: 100%;
-  max-width: none;
   margin: 0;
   padding: 0;
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 320px), 380px));
-  gap: 16px;
+
   list-style: none;
   text-align: left;
-  justify-content: center;
 }
 
-.course-section li {
-  margin: 0;
+/* Project card */
+
+.project-card {
   min-width: 0;
-}
-
-.course-section li a {
-  position: relative;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 16px;
-
-  min-height: 88px;
+  margin: 0;
   padding: 22px 24px;
 
   border: 1px solid #e1e3da;
@@ -415,10 +435,6 @@ a {
 
   background: #fbfbf8;
   color: #24271f;
-
-  text-align: left;
-  text-decoration: none;
-  line-height: 1.5;
 
   box-shadow: 0 2px 5px rgba(23, 25, 20, 0.025);
 
@@ -430,26 +446,69 @@ a {
     box-shadow 200ms ease;
 }
 
-.course-section li a::after {
-  content: "↗";
-  flex-shrink: 0;
-  color: #426b52;
-  font-size: 1.1rem;
-  transition: transform 200ms ease;
-}
-
-.course-section li a:hover {
+.project-card:hover {
   transform: translateY(-3px);
   border-color: #426b52;
   background: #ffffff;
-  color: #171914;
   box-shadow: 0 12px 28px rgba(23, 25, 20, 0.07);
 }
 
-.course-section li a:hover::after {
+/* Project titles */
+
+.project-card h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 650;
+  line-height: 1.5;
+}
+
+.project-card h4 a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+
+  color: inherit;
+  text-decoration: none;
+}
+
+.project-card h4 a::after {
+  content: "↗";
+  flex-shrink: 0;
+
+  color: #426b52;
+  font-size: 1.1rem;
+
+  transition: transform 200ms ease;
+}
+
+.project-card h4 a:hover::after {
   transform: translate(2px, -2px);
 }
 
+/* Project descriptions */
+
+.project-description {
+  margin: 10px 0 0;
+
+  color: #74776e;
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+/* Empty state */
+
+.course-empty {
+  margin: 0;
+  padding: 24px;
+
+  border: 1px dashed #dedfd6;
+  border-radius: 14px;
+
+  color: #74776e;
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
 
 /* =========================
    FOOTER
@@ -459,11 +518,14 @@ footer {
   display: flex;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
 
   width: 100%;
   padding: 30px 20px;
 
   border-top: 1px solid #e2e8f0;
+  background: transparent;
+
   color: #64748b;
   font-size: 0.9rem;
   text-align: center;
@@ -475,6 +537,10 @@ footer a {
   text-decoration: none;
 }
 
+footer a:hover {
+  text-decoration: underline;
+}
+
 /* =========================
    DARK MODE
 ========================= */
@@ -484,6 +550,8 @@ body.dark {
   color: #f1f5f9;
 }
 
+/* Hero */
+
 body.dark .hero {
   --hero-bg: #111410;
   --hero-text: #edf0e7;
@@ -492,21 +560,55 @@ body.dark .hero {
   --hero-accent: #a5cf91;
 }
 
+/* Theme toggle */
+
 body.dark .theme-toggle {
   border-color: #30362e;
   background: #111410;
   color: #edf0e7;
 }
 
-body.dark .course {
+/* Projects section */
+
+body.dark .projects {
   background: #0f1115;
   color: #f1f5f9;
 }
 
 body.dark .course-header p {
-  color: #94a3b8;
+  color: #a0a69a;
 }
 
+/* Project cards */
+
+body.dark .project-card {
+  border-color: #30362e;
+  background: #151914;
+  color: #edf0e7;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+}
+
+body.dark .project-card:hover {
+  border-color: #a5cf91;
+  background: #1b2119;
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
+}
+
+body.dark .project-card h4 a::after {
+  color: #a5cf91;
+}
+
+body.dark .project-description {
+  color: #a0a69a;
+}
+
+body.dark .course-empty {
+  border-color: #30362e;
+  color: #a0a69a;
+}
+
+/* Footer */
 
 body.dark footer {
   border-color: #29303a;
@@ -517,30 +619,6 @@ body.dark footer {
 body.dark footer a {
   color: #60a5fa;
 }
-
-
-body.dark .course-section li a {
-  border-color: #30362e;
-  background: #151914;
-  color: #edf0e7;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
-}
-
-body.dark .course-section li a::after {
-  color: #a5cf91;
-}
-
-body.dark .course-section li a:hover {
-  border-color: #a5cf91;
-  background: #1b2119;
-  color: #ffffff;
-  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
-}
-
-body.dark .course-header p {
-  color: #a0a69a;
-}
-
 
 /* =========================
    TABLET
@@ -577,8 +655,20 @@ body.dark .course-header p {
     flex-direction: column;
   }
 
-  .course {
+  /* Stack the two project columns */
+
+  .projects {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 60px;
     padding: 65px 22px;
+  }
+
+  .project-column .course-header {
+    margin-bottom: 30px;
+  }
+
+  .course-header h2 {
+    font-size: clamp(2rem, 6vw, 2.8rem);
   }
 }
 
@@ -622,6 +712,27 @@ body.dark .course-header p {
     right: 12px;
     width: 38px;
     height: 38px;
+  }
+
+  .projects {
+    gap: 48px;
+    padding: 55px 18px;
+  }
+
+  .project-column .course-header {
+    margin-bottom: 26px;
+  }
+
+  .course-header h2 {
+    font-size: 2rem;
+  }
+
+  .course-header p {
+    font-size: 0.95rem;
+  }
+
+  .project-card {
+    padding: 19px 18px;
   }
 }
 
