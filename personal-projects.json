@@ -1,15 +1,29 @@
-
 {
-  "projects": [
+  "sections": [
     {
-      "name": "Portfolio Website",
-      "description": "My personal portfolio built with HTML, CSS, and JavaScript.",
-      "url": "https://github.com/FabienHaury"
+      "name": "Tidytuesday",
+      "projects": [
+        {
+          "name": "Australian Frogs",
+          "description": "TidyTuesday 2025-09-02",
+          "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20analysis/Australian%20Frogs"
+        },
+        {
+          "name": "European energy",
+          "description": "TidyTuesday 2020-08-04",
+          "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20visualization/European%20energy"
+        }
+      ]
     },
     {
       "name": "Data Explorer",
-      "description": "An experiment in interactive data exploration.",
-      "url": "https://example.com/data-explorer"
+      "projects": [
+        {
+          "name": "Data Explorer",
+          "description": "An experiment in interactive data exploration.",
+          "url": "https://example.com/data-explorer"
+        }
+      ]
     }
   ]
 }
