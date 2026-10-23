@@ -1,3 +1,4 @@
+
 /* =========================
    GLOBAL
 ========================= */
@@ -354,13 +355,13 @@ a:focus-visible {
   text-align: center;
 }
 
-/* Each column */
-
 .project-column {
   min-width: 0;
 }
 
-/* Column headings */
+/* =========================
+   PROJECT HEADINGS
+========================= */
 
 .project-column .course-header {
   margin-bottom: 40px;
@@ -385,7 +386,7 @@ a:focus-visible {
 }
 
 /* =========================
-   GENERATED COURSE SECTIONS
+   COURSE SECTIONS
 ========================= */
 
 .course-section {
@@ -423,7 +424,9 @@ a:focus-visible {
   text-align: left;
 }
 
-/* Project card */
+/* =========================
+   PROJECT CARDS
+========================= */
 
 .project-card {
   min-width: 0;
@@ -453,10 +456,9 @@ a:focus-visible {
   box-shadow: 0 12px 28px rgba(23, 25, 20, 0.07);
 }
 
-/* Project titles */
-
 .project-card h4 {
   margin: 0;
+
   font-size: 1rem;
   font-weight: 650;
   line-height: 1.5;
@@ -470,6 +472,7 @@ a:focus-visible {
 
   color: inherit;
   text-decoration: none;
+  overflow-wrap: anywhere;
 }
 
 .project-card h4 a::after {
@@ -486,8 +489,6 @@ a:focus-visible {
   transform: translate(2px, -2px);
 }
 
-/* Project descriptions */
-
 .project-description {
   margin: 10px 0 0;
 
@@ -496,7 +497,54 @@ a:focus-visible {
   line-height: 1.7;
 }
 
-/* Empty state */
+/* =========================
+   PERSONAL PROJECT HIERARCHY
+========================= */
+
+/* Top-level personal project sections */
+
+.personal-section {
+  margin-bottom: 42px;
+}
+
+.personal-section:last-child {
+  margin-bottom: 0;
+}
+
+/* Main section title, e.g. TidyTuesday */
+
+.personal-section > h3 {
+  margin: 0 0 20px;
+
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+}
+
+/* Nested subsections, e.g. Data Analysis */
+
+.personal-section .course-section {
+  margin: 24px 0 0;
+}
+
+.personal-section .course-section h4 {
+  margin: 0 0 14px;
+
+  color: #74776e;
+  font-size: 0.9rem;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+/* Direct projects inside a personal section */
+
+.personal-section > .project-list {
+  margin-top: 0;
+}
+
+/* =========================
+   EMPTY STATE
+========================= */
 
 .course-empty {
   margin: 0;
@@ -568,7 +616,7 @@ body.dark .theme-toggle {
   color: #edf0e7;
 }
 
-/* Projects section */
+/* Projects background */
 
 body.dark .projects {
   background: #0f1115;
@@ -605,6 +653,15 @@ body.dark .project-description {
 
 body.dark .course-empty {
   border-color: #30362e;
+  color: #a0a69a;
+}
+
+/* =========================
+   PERSONAL PROJECT HIERARCHY
+   DARK MODE
+========================= */
+
+body.dark .personal-section .course-section h4 {
   color: #a0a69a;
 }
 
@@ -655,7 +712,7 @@ body.dark footer a {
     flex-direction: column;
   }
 
-  /* Stack the two project columns */
+  /* Stack project columns on smaller screens */
 
   .projects {
     grid-template-columns: minmax(0, 1fr);
