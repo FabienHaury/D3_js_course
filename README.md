@@ -2,7 +2,7 @@
 
 A personal portfolio showcasing my work in **D3.js, data visualization, and creative coding**.
 
-🌐 **Live website:** [fabienhaury.github.io/portfolio](https://fabienhaury.github.io/portfolio/)
+🌐 **Live website:** [fabienhaury.github.io/Portfolio](https://fabienhaury.github.io/Portfolio/)
 
 ## Overview
 
