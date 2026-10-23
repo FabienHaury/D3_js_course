@@ -1,17 +1,27 @@
 {
   "sections": [
     {
-      "name": "Tidytuesday",
-      "projects": [
+      "name": "TidyTuesday",
+      "subsections": [
         {
-          "name": "Australian Frogs",
-          "description": "TidyTuesday 2025-09-02",
-          "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20analysis/Australian%20Frogs"
+          "name": "Data Analysis",
+          "projects": [
+            {
+              "name": "Australian Frogs",
+              "description": "TidyTuesday 2025-09-02",
+              "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20analysis/Australian%20Frogs"
+            }
+          ]
         },
         {
-          "name": "European energy",
-          "description": "TidyTuesday 2020-08-04",
-          "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20visualization/European%20energy"
+          "name": "Data Visualization",
+          "projects": [
+            {
+              "name": "European Energy",
+              "description": "TidyTuesday 2020-08-04",
+              "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20visualization/European%20energy"
+            }
+          ]
         }
       ]
     },
