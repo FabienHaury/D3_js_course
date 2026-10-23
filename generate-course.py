@@ -42,9 +42,12 @@ def render_project(project):
 
     return (
         '<li class="project-card">\n'
-        f'  <h4><a href="{url}" target="_blank" '
-        f'rel="noopener noreferrer">{name}</a></h4>\n'
-        f'  {description_html}\n'
+        f'  <a class="project-card-link" href="{url}" '
+        'target="_blank" rel="noopener noreferrer">\n'
+        f'    <h4>{name}</h4>\n'
+        f'    {description_html}\n'
+        '    <span class="project-arrow" aria-hidden="true">↗</span>\n'
+        '  </a>\n'
         '</li>'
     )
 
