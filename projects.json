@@ -12,7 +12,11 @@
     },
     {
       "name": "D3.js",
-      "projects": []
+      "projects": [{
+          "name": "Pokemon project",
+          "description": "An interactive Pokémon explorer.",
+          "url": "https://fabienhaury.github.io/react-foundation/"
+        }]
     }
   ]
 }
