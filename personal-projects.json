@@ -19,11 +19,13 @@
           "projects": [
             {
               "name": "European Energy",
+              "languages": ["R"],
               "description": "TidyTuesday 2020-08-04",
               "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20visualization/European%20energy"
             },
             {
               "name": "Agricultural Production Statistics in New Zealand",
+              "languages": ["R"],
               "description": "TidyTuesday 2026-02-17",
               "url": "https://github.com/FabienHaury/TidyTuesday/tree/main/Data%20visualization/Agricultural%20Production%20Statistics%20in%20New%20Zealand"
             }
