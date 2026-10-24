@@ -533,27 +533,25 @@ a:focus-visible {
   flex-wrap: wrap;
   align-items: center;
   gap: 6px;
-
-  margin-top: 14px;
+  margin-top: 12px;
 }
 
 .language-tag {
   display: inline-block;
-  padding: 4px 9px;
-
+  padding: 4px 8px;
   border: 1px solid #d7e2d5;
-  border-radius: 6px;
-
+  border-radius: 5px;
   background: #edf3eb;
   color: #426b52;
-
   font-family: monospace;
   font-size: 0.7rem;
   line-height: 1.4;
   letter-spacing: 0.02em;
 }
 
-/* Arrow: a single element in the top-right corner. */
+/* =========================
+Arrow: a single element in the top-right corner. 
+========================= */
 
 .project-arrow {
   position: absolute;
@@ -576,7 +574,9 @@ a:focus-visible {
   transform: translate(2px, -2px);
 }
 
-/* Keyboard accessibility */
+/* =========================
+Keyboard accessibility 
+========================= */
 
 .project-card-link:focus-visible {
   outline: 2px solid #426b52;
@@ -677,7 +677,9 @@ body.dark {
   color: #f1f5f9;
 }
 
-/* Hero */
+/* =========================
+Hero 
+========================= */
 
 body.dark .hero {
   --hero-bg: #111410;
@@ -687,7 +689,9 @@ body.dark .hero {
   --hero-accent: #a5cf91;
 }
 
-/* Theme toggle */
+/* =========================
+Theme toggle 
+========================= */
 
 body.dark .theme-toggle {
   border-color: #30362e;
@@ -695,7 +699,9 @@ body.dark .theme-toggle {
   color: #edf0e7;
 }
 
-/* Projects background */
+/* =========================
+Projects background 
+========================= */
 
 body.dark .projects {
   background: #0f1115;
@@ -706,7 +712,10 @@ body.dark .course-header p {
   color: #a0a69a;
 }
 
-/* Project cards */
+/* =========================
+Project cards 
+========================= */
+*/
 
 body.dark .project-card {
   border-color: #30362e;
@@ -722,7 +731,9 @@ body.dark .project-card:hover {
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.22);
 }
 
-/* Remove underlines and preserve inherited text colors in dark mode. */
+/* =========================
+Remove underlines and preserve inherited text colors in dark mode. 
+========================= */
 
 body.dark .project-card-link,
 body.dark .project-card-link:link,
@@ -749,7 +760,8 @@ body.dark .project-description {
   color: #a0a69a;
 }
 
-/* Project language tags */
+/* =========================
+Project language tags */
 
 body.dark .language-tag {
   border-color: #3a4935;
@@ -766,13 +778,17 @@ body.dark .course-empty {
   color: #a0a69a;
 }
 
-/* Personal project hierarchy */
+/* =========================
+Personal project hierarchy 
+========================= */
 
 body.dark .personal-section .course-section h4 {
   color: #a0a69a;
 }
 
-/* Footer */
+/* =========================
+Footer 
+========================= */
 
 body.dark footer {
   border-color: #29303a;
@@ -819,7 +835,9 @@ body.dark footer a {
     flex-direction: column;
   }
 
-  /* Stack project columns on smaller screens. */
+  /* =========================
+   Stack project columns on smaller screens.
+   ========================= */
 
   .projects {
     grid-template-columns: minmax(0, 1fr);
@@ -895,7 +913,9 @@ body.dark footer a {
     font-size: 0.95rem;
   }
 
-  /* Keep card padding consistent with the mobile arrow position. */
+  /* =========================
+   Keep card padding consistent with the mobile arrow position.
+   ========================= */
 
   .project-card-link,
   .project-card-link:link,
