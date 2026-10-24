@@ -1,4 +1,3 @@
-
 import json
 from html import escape
 from pathlib import Path
@@ -35,8 +34,34 @@ def render_project(project):
     description = escape(str(project.get("description", "")))
     url = escape(str(project["url"]), quote=True)
 
+    # Optional project languages
+    languages = project.get("languages", [])
+
+    if not isinstance(languages, list):
+        languages = []
+
+    languages = [
+        str(language).strip()
+        for language in languages
+        if str(language).strip()
+    ]
+
+    languages_html = ""
+
+    if languages:
+        language_tags = "\n".join(
+            f'      <span class="language-tag">{escape(language)}</span>'
+            for language in languages
+        )
+
+        languages_html = (
+            '    <div class="project-languages">\n'
+            f'{language_tags}\n'
+            '    </div>\n'
+        )
+
     description_html = (
-        f'<p class="project-description">{description}</p>'
+        f'    <p class="project-description">{description}</p>\n'
         if description else ""
     )
 
@@ -45,7 +70,8 @@ def render_project(project):
         f'  <a class="project-card-link" href="{url}" '
         'target="_blank" rel="noopener noreferrer">\n'
         f'    <h4>{name}</h4>\n'
-        f'    {description_html}\n'
+        f'{description_html}'
+        f'{languages_html}'
         '    <span class="project-arrow" aria-hidden="true">↗</span>\n'
         '  </a>\n'
         '</li>'
@@ -112,44 +138,55 @@ def render_course(data):
 # - Sections containing both
 # =========================
 
+def render_personal_projects(data):
+    sections_html = []
 
-def render_project(project):
-    name = escape(str(project["name"]))
-    description = escape(str(project.get("description", "")))
-    url = escape(str(project["url"]), quote=True)
+    for section in data.get("sections", []):
+        section_name = escape(str(section["name"]))
+        content = []
 
-    languages = project.get("languages", [])
-    languages_html = ""
+        # Projects directly inside the section
+        projects = section.get("projects", [])
 
-    if languages:
-        language_tags = "\n".join(
-            f'      <span class="language-tag">{escape(str(lang))}</span>'
-            for lang in languages
+        if projects:
+            content.append(render_project_list(projects))
+
+        # Nested subsections
+        for subsection in section.get("subsections", []):
+            subsection_name = escape(str(subsection["name"]))
+            subprojects = subsection.get("projects", [])
+
+            if not subprojects:
+                continue
+
+            project_list = render_project_list(subprojects)
+
+            content.append(
+                '<section class="course-section">\n'
+                f'  <h4>{subsection_name}</h4>\n'
+                f'  {project_list}\n'
+                '</section>'
+            )
+
+        # Skip sections without projects or subsections
+        if not content:
+            continue
+
+        sections_html.append(
+            '<section class="personal-section">\n'
+            f'  <h3>{section_name}</h3>\n'
+            + "\n".join(content)
+            + '\n</section>'
         )
 
-        languages_html = (
-            '<div class="project-languages">\n'
-            f'{language_tags}\n'
-            '    </div>\n'
+    if not sections_html:
+        return (
+            '<p class="course-empty">'
+            'Personal projects will appear here as they are added.'
+            '</p>'
         )
 
-    description_html = (
-        f'<p class="project-description">{description}</p>'
-        if description else ""
-    )
-
-    return (
-        '<li class="project-card">\n'
-        f'  <a class="project-card-link" href="{url}" '
-        'target="_blank" rel="noopener noreferrer">\n'
-        f'    <h4>{name}</h4>\n'
-        f'    {description_html}\n'
-        f'    {languages_html}'
-        '    <span class="project-arrow" aria-hidden="true">↗</span>\n'
-        '  </a>\n'
-        '</li>'
-    )
-
+    return "\n\n".join(sections_html)
 
 
 # =========================
